@@ -3,13 +3,13 @@
 	
     // Create a database connection
     //global $con;
-	$con = mysql_connect("localhost", "workoffer");
+	$con = mysql_connect("localhost", "fees");
     if ( !$con ) {
         die("Database connection failed: ". mysql_error());
     }
 	
 	// Select a database to use
-    $db_select = mysql_select_db("workofferdb", $con);
+    $db_select = mysql_select_db("feesdb", $con);
     if ( !$db_select ) {
         die("Database selection failed: ". mysql_error());
     }
