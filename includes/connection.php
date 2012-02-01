@@ -3,7 +3,7 @@
 	
     // Create a database connection
     //global $con;
-	$con = mysql_connect("localhost", "fees");
+	$con = mysql_connect("localhost", "fees", "@f1i@");
     if ( !$con ) {
         die("Database connection failed: ". mysql_error());
     }
