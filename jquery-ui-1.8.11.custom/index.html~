@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+		<title>jQuery UI Example Page</title>
+		<link type="text/css" href="css/redmond/jquery-ui-1.8.11.custom.css" rel="stylesheet" />	
+		<script type="text/javascript" src="js/jquery-1.5.1.min.js"></script>
+		<script type="text/javascript" src="js/jquery-ui-1.8.11.custom.min.js"></script>
+		<script type="text/javascript">
+			$(function(){
+
+				// Accordion
+				$("#accordion").accordion({ header: "h3" });
+	
+				// Tabs
+				$('#tabs').tabs();
+	
+
+				// Dialog			
+				$('#dialog').dialog({
+					autoOpen: false,
+					width: 600,
+					buttons: {
+						"Ok": function() { 
+							$(this).dialog("close"); 
+						}, 
+						"Cancel": function() { 
+							$(this).dialog("close"); 
+						} 
+					}
+				});
+				
+				// Dialog Link
+				$('#dialog_link').click(function(){
+					$('#dialog').dialog('open');
+					return false;
+				});
+
+				// Datepicker
+				$('#datepicker').datepicker({
+					changeMonth: true,
+					changeYear: true,
+					dateFormat: "yy-mm-dd",
+					minDate: "-30Y"
+				});
+				
+				// Slider
+				$('#slider').slider({
+					range: true,
+					ids: [17, 67]
+				});
+				
+				// Progressbar
+				$("#progressbar").progressbar({
+					id: 20 
+				});
+				
+				//hover states on the static widgets
+				$('#dialog_link, ul#icons li').hover(
+					function() { $(this).addClass('ui-state-hover'); }, 
+					function() { $(this).removeClass('ui-state-hover'); }
+				);
+
+				$( "#sortable1, #sortable2" ).sortable({
+					connectWith: ".connectedSortable"
+				}).disableSelection();
+
+				$( "button, input:submit, a", ".demo" ).button();
+				$( "input:submit", ".demo" ).click(function() { alert(getQuery()); return false; });
+				
+			});
+
+			function getQuery() {
+				var fields = $('#sortable1').sortable('toArray');
+				var date = $('#datepicker').datepicker().val().split("-");
+				var table = $.datepicker.formatDate("yy", $("#datepicker").datepicker("getDate"));
+
+				var query = "select " + fields + " from `" + table + " ` where nx = " + 1 + " and ny = " + 1 + ";";
+				return query;
+			}
+		</script>
+
+
+		<style type="text/css">
+			/*demo page css*/
+			body{ font: 62.5% "Trebuchet MS", sans-serif; margin: 15px;}
+			.demoHeaders { margin-top: 2em; }
+			#dialog_link {padding: .4em 1em .4em 20px;text-decoration: none;position: relative;}
+			#dialog_link span.ui-icon {margin: 0 5px 0 0;position: absolute;left: .2em;top: 50%;margin-top: -8px;}
+			ul#icons {margin: 0; padding: 0;}
+			ul#icons li {margin: 2px; position: relative; padding: 4px 0; cursor: pointer; float: left;  list-style: none;}
+			ul#icons span.ui-icon {float: left; margin: 0 4px;}
+			#sortable1, #sortable2 { list-style-type: none; margin: 0; padding: 0; float: left; margin-right: 10px; }
+			#sortable1 li, #sortable2 li { margin: 0 5px 5px 5px; padding: 5px; font-size: 1.2em; width: 120px; }
+		</style>	
+	</head>
+	<body>
+	<h1>Marina Database Interface</h1>
+
+		<!-- Datepicker -->
+		<h2 class="demoHeaders">Date</h2>
+		<p>Date: <input type="text" id="datepicker"></p>
+				
+
+		<h2 class="demoHeaders">Parameters</h2>
+		<div class="demo-frame" style="clear:right; width:1100px; border:1px solid #ddd; overflow:auto; position:relative; padding: 15px; margin-bottom: 10px">
+			<div style="position: float; margin: 5px"> Query:</div>
+
+			<ul id="sortable1" class="connectedSortable">
+				<li class="ui-state-default" id="nx">nx</li>
+				<li class="ui-state-default" id="ny">ny</li>
+				<li class="ui-state-default" id="datetime">datetime</li>
+			</ul>
+			<ul id="sortable2" class="connectedSortable">
+				<li class="ui-state-highlight" id="u_m1ll">u_m1ll</li>
+				<li class="ui-state-highlight" id="v_m1ll">v_m1ll</li>
+				<li class="ui-state-highlight" id="aird_m1ll">aird_m1ll</li>
+				<li class="ui-state-highlight" id="p_m1ll">p_m1ll</li>
+				<li class="ui-state-highlight" id="t_m1ll">t_m1ll</li>
+				<li class="ui-state-highlight" id="q2_m1ll">q2_m1ll</li>
+			</ul>
+			<ul id="sortable2" class="connectedSortable">
+				<li class="ui-state-highlight" id="u_m2ll">u_m2ll</li>
+				<li class="ui-state-highlight" id="v_m2ll">v_m2ll</li>
+				<li class="ui-state-highlight" id="aird_m2ll">aird_m2ll</li>
+				<li class="ui-state-highlight" id="p_m2ll">p_m2ll</li>
+				<li class="ui-state-highlight" id="t_m2ll">t_m2ll</li>
+				<li class="ui-state-highlight" id="q2_m2ll">q2_m2ll</li>
+			</ul>
+			<ul id="sortable2" class="connectedSortable">
+				<li class="ui-state-highlight" id="u_m3ll">u_m3ll</li>
+				<li class="ui-state-highlight" id="v_m3ll">v_m3ll</li>
+				<li class="ui-state-highlight" id="aird_m3ll">aird_m3ll</li>
+				<li class="ui-state-highlight" id="p_m3ll">p_m3ll</li>
+				<li class="ui-state-highlight" id="t_m3ll">t_m3ll</li>
+				<li class="ui-state-highlight" id="q2_m3ll">q2_m3ll</li>
+			</ul>
+			<ul id="sortable2" class="connectedSortable">
+				<li class="ui-state-highlight" id="u_m4ll">u_m4ll</li>
+				<li class="ui-state-highlight" id="v_m4ll">v_m4ll</li>
+				<li class="ui-state-highlight" id="aird_m4ll">aird_m4ll</li>
+				<li class="ui-state-highlight" id="p_m4ll">p_m4ll</li>
+				<li class="ui-state-highlight" id="t_m4ll">t_m4ll</li>
+				<li class="ui-state-highlight" id="q2_m4ll">q2_m4ll</li>
+			</ul>
+			<ul id="sortable2" class="connectedSortable">
+				<li class="ui-state-highlight" id="u_m5ll">u_m5ll</li>
+				<li class="ui-state-highlight" id="v_m5ll">v_m5ll</li>
+				<li class="ui-state-highlight" id="aird_m5ll">aird_m5ll</li>
+				<li class="ui-state-highlight" id="p_m5ll">p_m5ll</li>
+				<li class="ui-state-highlight" id="t_m5ll">t_m5ll</li>
+				<li class="ui-state-highlight" id="q2_m5ll">q2_m5ll</li>
+			</ul>
+			<ul id="sortable2" class="connectedSortable">
+				<li class="ui-state-highlight" id="smll">smll</li>
+			</ul>
+		</div>
+
+		<div class="demo">
+			<button>Graph</button>
+			<input type="submit" value="Fetch ASCII"/>
+			<!--<a href="#">An anchor</a>-->
+		</div>
+
+	</body>
+</html>
+
+

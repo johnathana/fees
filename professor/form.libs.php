@@ -1,0 +1,10 @@
+<?php
+$form_rules=array(
+'title'=>array('required'=>true),
+'lesson'=>array('required'=>true),
+'requirements'=>array('required'=>true),
+'deliverables'=>array('required'=>true),
+'hours'=>array('required'=>true),
+'deadline'=>array('required'=>true)
+);
+?>
