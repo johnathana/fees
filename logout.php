@@ -1,11 +1,6 @@
 <?php
-	require_once($_SERVER['DOCUMENT_ROOT'].'/includes/auth.php');
+include_once('includes/CAS.php');
 
-	global $auth;
+phpCAS::logout();
 
-	if ($auth->logged) {
-		$auth->logout();
-	}
-
-	header("Location: /index.php");
 ?>
