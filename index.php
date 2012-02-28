@@ -1,4 +1,22 @@
 <!DOCTYPE html> 
+<?php
+include_once('includes/CAS.php');
+
+phpCAS::setDebug(false);
+phpCAS::client(SAML_VERSION_1_1,'login.uoa.gr',443,'');
+phpCAS::setNoCasServerValidation();
+phpCAS::forceAuthentication();
+if (isset($_REQUEST['logout'])) {
+       phpCAS::logout();
+}
+
+
+
+$user=phpCAS::getUser();
+$attr=phpCAS::getAttributes();
+
+
+?>
 <html> 
 <head>
 	<?php require_once($_SERVER['DOCUMENT_ROOT'].'/includes/head.php'); ?>
@@ -44,7 +62,8 @@
 		   
 
 <?php
-
+echo $user;
+var_dump($attr);
 // Create the form
 $login = new JFormer('loginForm', array(
     'submitButtonText' => 'Είσοδος',
