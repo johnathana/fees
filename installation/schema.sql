@@ -13,6 +13,7 @@ create table if not exists academic_year (
 
 create table if not exists work_offers (
     id int unsigned not null auto_increment primary key,
+    professor_email varchar(255),
     professor_name varchar(255),
     title varchar(255),
     lesson varchar(255),

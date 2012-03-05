@@ -62,7 +62,7 @@ $attr=phpCAS::getAttributes();
 		   
 
 <?php
-echo $user;
+echo "JohnAtahana";
 var_dump($attr);
 // Create the form
 $login = new JFormer('loginForm', array(
