@@ -13,7 +13,7 @@
 	global $auth;
 
 		$location = "";
-
+		echo $auth->is_admin;
 		switch ($auth->is_admin) {
 
 		case auth::Admin :
@@ -27,7 +27,7 @@
 			break;
 		}
 
-		header("Location: $location");
+		//header("Location: $location");
 ?>
 
 <body id="overview"> 
