@@ -23,8 +23,10 @@ class auth {
 		phpCAS::setNoCasServerValidation();
 		phpCAS::forceAuthentication();
 
-		$user=phpCAS::getUser();
-		$attr=phpCAS::getAttributes();
+		global $user=phpCAS::getUser();
+		global $attr=phpCAS::getAttributes();
+		if($attr['title'] == "Postgraduate Student")
+		this->is_admin = 0;
 	}
  
 	function logout() {

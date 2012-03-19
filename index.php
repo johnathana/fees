@@ -12,8 +12,6 @@
 
 	global $auth;
 
-	if ($auth->logged) {
-
 		$location = "";
 
 		switch ($auth->is_admin) {
@@ -30,7 +28,6 @@
 		}
 
 		header("Location: $location");
-	}
 ?>
 
 <body id="overview"> 
@@ -45,7 +42,7 @@
 		   
 
 <?php
-echo "JohnAtahana";
+echo $user;
 var_dump($attr);
 // Create the form
 $login = new JFormer('loginForm', array(
