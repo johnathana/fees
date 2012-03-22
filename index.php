@@ -12,7 +12,7 @@
 
 	global $auth;
 
-		$location = "";
+		//$location = "";
 		echo $auth->is_admin;
 		switch ($auth->is_admin) {
 

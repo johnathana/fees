@@ -25,8 +25,8 @@ class auth {
 
 		global $user=phpCAS::getUser();
 		global $attr=phpCAS::getAttributes();
-		if($attr['title'] == "Postgraduate Student")
-		this->is_admin = 0;
+		echo $attr['title'];
+		
 	}
  
 	function logout() {
