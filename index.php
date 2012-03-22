@@ -27,7 +27,7 @@
 			break;
 		}
 
-		//header("Location: $location");
+		header("Location: $location");
 ?>
 
 <body id="overview"> 
