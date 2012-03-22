@@ -13,7 +13,7 @@
 	global $auth;
 
 		//$location = "";
-		echo $auth->is_admin;
+		
 		switch ($auth->is_admin) {
 
 		case auth::Admin :
@@ -42,8 +42,7 @@
 		   
 
 <?php
-echo $user;
-var_dump($attr);
+echo $auth->is_admin;
 // Create the form
 $login = new JFormer('loginForm', array(
     'submitButtonText' => 'Είσοδος',
