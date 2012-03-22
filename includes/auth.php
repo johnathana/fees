@@ -23,8 +23,10 @@ class auth {
 		phpCAS::setNoCasServerValidation();
 		phpCAS::forceAuthentication();
 
-		global $user=phpCAS::getUser();
-		global $attr=phpCAS::getAttributes();
+		global $user;
+		$user = phpCAS::getUser();
+		global $attr;
+		$attr = phpCAS::getAttributes();
 		//echo $attr['title'];
 		
 	}
