@@ -25,7 +25,7 @@ class auth {
 
 		global $user=phpCAS::getUser();
 		global $attr=phpCAS::getAttributes();
-		echo $attr['title'];
+		//echo $attr['title'];
 		
 	}
  
