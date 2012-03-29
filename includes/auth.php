@@ -14,7 +14,9 @@ class auth {
 
 	var $id = 0;
 	var $is_admin = 0;
-
+	
+	var $user;
+	var $attr;
 
 	
 	function auth() {
