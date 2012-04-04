@@ -5,7 +5,7 @@
 	</article><!--/main--> 
 
 <?php
-	global $auth;
+	//global $auth;
 
 	//if (isset($auth) && $auth->logged) {
 	//	require_once($_SERVER['DOCUMENT_ROOT'].'/includes/menu.php');
