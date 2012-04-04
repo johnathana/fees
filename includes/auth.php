@@ -26,9 +26,9 @@ class auth {
 		phpCAS::forceAuthentication();
 
 		//global $user;
-		$user = phpCAS::getUser();
+		$this->user = phpCAS::getUser();
 		//global $attr;
-		$attr = phpCAS::getAttributes();
+		$this->attr = phpCAS::getAttributes();
 		//echo $attr['title'];
 		
 	}

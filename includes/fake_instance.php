@@ -21,9 +21,9 @@ class auth {
 	
 	function auth() {
 		//global $user;
-		$user = "mop09269";
+		$this->user = "mop09269";
 		//global $attr;
-		$attr = array('mail' => 'mop09269@di.uoa.gr',
+		$this->attr = array('mail' => 'mop09269@di.uoa.gr',
                'title'  => 'Postgraduate Student',
                'cn'   => 'Ioannis Iosifidis');
 		//echo $attr['title'];
@@ -33,5 +33,6 @@ class auth {
 }
 
 	$auth = new auth;
+	
 
 ?>
