@@ -11,11 +11,12 @@
 
 <?php
 	require_once($_SERVER['DOCUMENT_ROOT'].'/jFormer/jformer.php');
-	require_once($_SERVER['DOCUMENT_ROOT'].'/includes/auth.php');
+	require_once($_SERVER['DOCUMENT_ROOT'].'/includes/fake_instance.php');
+	//require_once($_SERVER['DOCUMENT_ROOT'].'/includes/auth.php');
 	require_once($_SERVER['DOCUMENT_ROOT'].'/includes/functions.php');
 	
 	global $auth;
-	$user_id = $auth->id;
+	
 ?>
 	<script type="text/javascript">
 		$(document).ready(function() {
@@ -130,7 +131,7 @@ $registration->addJFormPage($jFormPage1);
 
 // Set the function for a successful form submission
 function onSubmit($formValues) {
-	//return array('failureHtml' => json_encode($formValues->registrationPage->registrationSection1->winter_semester[0]));
+	
 
 	global $con;
 	global $auth;
@@ -148,8 +149,8 @@ function onSubmit($formValues) {
 	$year = get_current_year();
 	$academic_year_id = $year['id'];
 	
-	$query = "INSERT INTO work_offers (professor_id, title, lesson, candidates, requirements, deliverables, hours, deadline, at_di, academic_year_id, winter_semester, is_available, has_expired, addressed_for) 
-	VALUES ('".$auth->id."','".$title."','".$lesson."','".$candidates."','".$requirements."','".$deliverables."','".$hours."','".$deadline."','".$at_di."','".$academic_year_id."','".$winter_semester."', true, false,'".$addressed."')";
+	$query = "INSERT INTO work_offers (professor_email, professor_name, title, lesson, candidates, requirements, deliverables, hours, deadline, at_di, academic_year_id, winter_semester, is_available, has_expired, published, addressed_for) 
+	VALUES ('".$auth->attr['mail']."','".$auth->attr['cn']."','".$title."','".$lesson."','".$candidates."','".$requirements."','".$deliverables."','".$hours."','".$deadline."','".$at_di."','".$academic_year_id."','".$winter_semester."', true, false, false,'".$addressed."')";
 	$result_set = mysql_query($query,$con);
 	confirm_query($result_set);
 
@@ -157,6 +158,7 @@ function onSubmit($formValues) {
 		'successPageHtml' => '<h2>Η παροχή καταχωρήθηκε</h2><br>
 		<input type="button" name="menu" value="Αρχικό μενού" class="button" onClick="window.location.href=\'/index.php\'"/>'
 	);
+	return array('failureHtml' => '<h2>Η παροχή δεν καταχωρήθηκε</h2>');
 }
 
 // Process any request to the form

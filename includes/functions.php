@@ -1,4 +1,5 @@
 <?php
+	require_once($_SERVER['DOCUMENT_ROOT'].'/includes/connection.php');
     //This file is the place to store all basic functions
 	function confirm_query($result_set)
 	{

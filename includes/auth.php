@@ -1,6 +1,6 @@
 <?php
 
-include_once('includes/CAS.php');
+//include_once('includes/CAS.php');
 
 
 class auth {

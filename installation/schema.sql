@@ -27,6 +27,7 @@ create table if not exists work_offers (
     winter_semester boolean,
     is_available boolean,
     has_expired boolean,
+	published boolean,
     addressed_for tinyint(1) unsigned not null, /* for working people: 1 partial time, 2 full time */
     foreign key (academic_year_id) references academic_year(id)
 ) character set 'utf8' collate 'utf8_general_ci';

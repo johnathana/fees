@@ -2,7 +2,8 @@
 <html> 
 <head>
 	<?php 
-		require_once($_SERVER['DOCUMENT_ROOT'].'/includes/auth.php'); 
+		require_once($_SERVER['DOCUMENT_ROOT'].'/includes/fake_instance.php'); 
+		//require_once($_SERVER['DOCUMENT_ROOT'].'/includes/auth.php'); 
 		require_once($_SERVER['DOCUMENT_ROOT'].'/includes/head.php');
 		require_once($_SERVER['DOCUMENT_ROOT'].'/includes/functions.php'); 
 	 ?>
@@ -265,7 +266,7 @@
 						confirm_query($result_set);
 						break;
 					case auth::Professor :
-						$query = "SELECT * FROM work_offers WHERE professor_id = '".$auth->id."' AND has_expired = true";//fere tis anenerges paroxes enos kathigiti
+						$query = "SELECT * FROM work_offers WHERE professor_email = '".$auth->attr['mail']."' AND has_expired = true";//fere tis anenerges paroxes enos kathigiti
 						$result_set = mysql_query($query,$con);
 						confirm_query($result_set);
 						break;
@@ -293,7 +294,7 @@
 						confirm_query($result_set);
 						break;
 					case auth::Professor :
-						$query = "SELECT * FROM work_offers WHERE professor_id = '".$auth->id."' AND has_expired = false";//fere tis anenerges paroxes enos kathigiti
+						$query = "SELECT * FROM work_offers WHERE professor_email = '".$auth->attr['mail']."' AND has_expired = false";//fere tis anenerges paroxes enos kathigiti
 						$result_set = mysql_query($query,$con);
 						confirm_query($result_set);
 						break;
@@ -331,9 +332,9 @@
 							else
 								{$student_type="Πλήρως εργαζόμενο";}
 							/*Βρίσκουμε τις τιμές που θέλουμε μέσω των ξένων κλειδιών*/
-							$row1 = get_surname_from_professor_id($professor_id);
+							//$row1 = get_surname_from_professor_id($professor_id);
 							$row2 = get_ayear_from_academic_year_id($academic_year_id);
-							echo "<td>$id</td><td>$row1[surname]</td>
+							echo "<td>$id</td><td>$proffesor_email</td>
 								<td>$title</td><td>$lesson</td><td>$candidates</td><td>$requirements</td><td>$deliverables</td>
 								<td>$hours</td><td>$deadline</td><td>";
 							if($at_di==false)

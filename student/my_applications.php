@@ -2,8 +2,9 @@
 <html> 
 <head>
 	<?php 
-		require_once($_SERVER['DOCUMENT_ROOT'].'/includes/head.php'); 
-		require_once($_SERVER['DOCUMENT_ROOT'].'/includes/auth.php');
+		require_once($_SERVER['DOCUMENT_ROOT'].'/includes/head.php');
+		require_once($_SERVER['DOCUMENT_ROOT'].'/includes/fake_instance.php');
+		//require_once($_SERVER['DOCUMENT_ROOT'].'/includes/auth.php');
 		require_once($_SERVER['DOCUMENT_ROOT'].'/includes/mail.php');			
 		require_once($_SERVER['DOCUMENT_ROOT'].'/includes/functions.php'); 
 	 ?>
@@ -73,11 +74,12 @@
 				<div id="demo" ></div>
 				
 				<?php
-					if (isset($_GET['id']))
+					if (isset($_GET['id']))//tha bei stin if an exei ginei redirect apo application_form
 					{
 						$workoffer_id = $_GET['id'];
-						$stud_id = $auth->id;
-						$query1 = "SELECT * FROM work_applications WHERE user_id='$stud_id' AND work_id='$workoffer_id'";
+						$stud_email = $auth->attr['mail'];
+						$stud_name = $auth->attr['cn'];
+						$query1 = "SELECT * FROM work_applications WHERE student_email='$stud_email' AND work_id='$workoffer_id'";
 						$result_set1 = mysql_query($query1,$con);
 						confirm_query($result_set1);
 						if(mysql_num_rows($result_set1)>0)//iparxei idi kataxwrimeni afti i aitisi
@@ -87,7 +89,7 @@
 						}
 						else
 						{
-							$query = "INSERT INTO work_applications (user_id, work_id) values ('$stud_id', '$workoffer_id')";//NA ALLAXSW TO 1 ME TO ID POY UA VRW APO TO SESSION[EMAIL]
+							$query = "INSERT INTO work_applications (student_email, student_name, work_id) values ('$stud_email', $stud_name, '$workoffer_id')";
 							if (!mysql_query($query,$con))
 							{
 								die('Error: ' . mysql_error());
@@ -96,24 +98,15 @@
 							$result_set5 = mysql_query($query5,$con);
 							confirm_query($result_set5);
 							$row5 = mysql_fetch_assoc($result_set5);
-							$prof_id = $row5['professor_id'];
-							$query = "SELECT * FROM users WHERE id='$prof_id'";
-							$result_set = mysql_query($query,$con);
-							confirm_query($result_set);
-							$row = mysql_fetch_assoc($result_set);
-							$to = $row['email'];
+							$to = $row5['professor_email'];
 							$subject = "Workoffer Application";
-							$query = "SELECT name,surname FROM users WHERE id='$stud_id'";
-							$result_set = mysql_query($query,$con);
-							confirm_query($result_set);
-							$row = mysql_fetch_assoc($result_set);
-							$message = "Ο φοιτητής ".$row['surname'] ." ".$row['name']." έχει κάνει αίτηση για την παροχή ".$row5['title'].".";
+							$message = "Ο φοιτητής ".$auth->attr['cn'] ." έχει κάνει αίτηση για την παροχή ".$row5['title'].".";
 							workoffer_mail($to, $subject, $message);
 							
 						}
 					}
-					$stud_id = $auth->id;
-					$query = "SELECT work_id,accepted FROM work_applications WHERE user_id='$stud_id'";
+					$stud_email = $auth->attr['mail'];
+					$query = "SELECT work_id,accepted FROM work_applications WHERE student_email='$stud_email'";
 					$result_set = mysql_query($query,$con);
 					confirm_query($result_set);
 				?>
@@ -163,9 +156,9 @@
 								else
 								{$student_type="Πλήρως εργαζόμενο";}
 								/*Βρίσκουμε τις τιμές που θέλουμε μέσω των ξένων κλειδιών*/
-								$row2 = get_surname_from_professor_id($professor_id);
+								//$row2 = get_surname_from_professor_id($professor_id);
 								$row3 = get_ayear_from_academic_year_id($academic_year_id);
-								echo "<td>$id</td><td>$row2[surname]</td>
+								echo "<td>$id</td><td>$professor_name</td>
 									<td>$title</td><td>$lesson</td><td>$candidates</td><td>$requirements</td><td>$deliverables</td>
 									<td>$hours</td><td>$deadline</td><td>";
 								if($at_di==false)

@@ -1,6 +1,6 @@
 <?php
 
-include_once('includes/CAS.php');
+//include_once('includes/CAS.php');
 
 
 class auth {
@@ -23,9 +23,9 @@ class auth {
 		//global $user;
 		$this->user = "mop09269";
 		//global $attr;
-		$this->attr = array('mail' => 'mop09269@di.uoa.gr',
+		$this->attr = array('mail' => 'professor1@di.uoa.gr',
                'title'  => 'Postgraduate Student',
-               'cn'   => 'Ioannis Iosifidis');
+               'cn'   => 'Professor1');
 		//echo $attr['title'];
 		
 	}
