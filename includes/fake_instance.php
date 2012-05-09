@@ -8,12 +8,13 @@ class auth {
 	const Student = 0;
 	const Admin = 1;
 	const Professor = 2;
+	const Secretariat = 3;
 
 	var $email = '';
 	var $logged = false;
 
 	var $id = 0;
-	var $is_admin = 0;
+	var $role = 0;
 	
 	var $user;
 	var $attr;
@@ -32,7 +33,7 @@ class auth {
  
 }
 
-	$auth = new auth;
-	
+
+$auth = new auth;
 
 ?>

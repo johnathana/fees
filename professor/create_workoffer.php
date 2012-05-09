@@ -50,7 +50,7 @@
 <?php
 	$disabled = '';
 	
-	switch ($auth->is_admin) {
+	switch ($auth->role) {
 	case auth::Student :
 		die("Unauthorized access");
 	case auth::Professor :
