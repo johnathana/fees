@@ -334,7 +334,7 @@
 							/*Βρίσκουμε τις τιμές που θέλουμε μέσω των ξένων κλειδιών*/
 							//$row1 = get_surname_from_professor_id($professor_id);
 							$row2 = get_ayear_from_academic_year_id($academic_year_id);
-							echo "<td>$id</td><td>$proffesor_email</td>
+							echo "<td>$id</td><td>$professor_name</td>
 								<td>$title</td><td>$lesson</td><td>$candidates</td><td>$requirements</td><td>$deliverables</td>
 								<td>$hours</td><td>$deadline</td><td>";
 							if($at_di==false)

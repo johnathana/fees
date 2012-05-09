@@ -5,6 +5,8 @@
 
 class auth {
 
+	var $role = 0;
+
 	const Student = 0;
 	const Admin = 1;
 	const Professor = 2;
@@ -14,7 +16,6 @@ class auth {
 	var $logged = false;
 
 	var $id = 0;
-	var $role = 0;
 	
 	var $user;
 	var $attr;
@@ -25,10 +26,11 @@ class auth {
 		$this->user = "mop09269";
 		//global $attr;
 		$this->attr = array('mail' => 'professor1@di.uoa.gr',
-               'title'  => 'Postgraduate Student',
+               'title'  => 'Professor',
                'cn'   => 'Professor1');
 		//echo $attr['title'];
 		
+		$role = Professor;
 	}
  
 }
