@@ -13,7 +13,7 @@ class auth {
 	var $logged = false;
 
 	var $id = 0;
-	var $is_admin = 0;
+	var $is_admin = 2;
 	
 	var $user;
 	var $attr;
@@ -24,7 +24,7 @@ class auth {
 		$this->user = "mop09269";
 		//global $attr;
 		$this->attr = array('mail' => 'professor1@di.uoa.gr',
-               'title'  => 'Postgraduate Student',
+               'title'  => 'Professor',
                'cn'   => 'Professor1');
 		//echo $attr['title'];
 		

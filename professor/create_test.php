@@ -156,7 +156,7 @@ function onSubmit($formValues) {
 
 	return array(
 		'successPageHtml' => '<h2>Η παροχή καταχωρήθηκε</h2><br>
-		<input type="button" name="menu" value="Αρχικό μενού" class="button" onClick="window.location.href=\'/index.php\'"/>'
+		<input type="button" name="menu" value="Αρχικό μενού" class="button" onClick="window.location.href=\'/professor/prof_menu.php\'"/>'
 	);
 	return array('failureHtml' => '<h2>Η παροχή δεν καταχωρήθηκε</h2>');
 }
