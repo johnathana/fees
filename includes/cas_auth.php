@@ -12,12 +12,6 @@ class auth {
 	const Professor = 2;
 	const Secretariat = 3;
 
-	var $email = '';
-	var $logged = false;
-
-	var $id = 0;
-
-	
 	var $user;
 	var $attr;
 
