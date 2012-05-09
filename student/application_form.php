@@ -3,8 +3,7 @@
 <head>
 	<?php 
 		require_once($_SERVER['DOCUMENT_ROOT'].'/includes/head.php'); 
-		//require_once($_SERVER['DOCUMENT_ROOT'].'/includes/auth.php');
-		require_once($_SERVER['DOCUMENT_ROOT'].'/includes/fake_instance.php'); 
+		require_once($_SERVER['DOCUMENT_ROOT'].'/includes/auth.php');
 		require_once($_SERVER['DOCUMENT_ROOT'].'/includes/functions.php'); 
 	 ?>
 	<style type="text/css" title="currentStyle">
