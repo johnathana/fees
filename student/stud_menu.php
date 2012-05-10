@@ -4,7 +4,7 @@
 	<?php
 		require_once($_SERVER['DOCUMENT_ROOT'].'/includes/auth.php'); 
 		require_once($_SERVER['DOCUMENT_ROOT'].'/includes/head.php'); ?>
-	?>
+	
 	
 	<link type="text/css" href="../jquery-ui-1.8.11.custom/css/redmond/jquery-ui-1.8.11.custom.css" rel="Stylesheet" />
 	<script type="text/javascript" src="../jquery-validation-1.8.0/jquery.validate.min.js"></script>
