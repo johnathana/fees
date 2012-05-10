@@ -14,5 +14,5 @@
 	<script type="text/javascript" src="../jFormer/jFormer.js" ></script> 
 
 
-	<?php //echo $_SERVER["REQUEST_URI"]; ?>
+	<?php echo $_SERVER["REQUEST_URI"]; ?>
 
