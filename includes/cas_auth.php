@@ -15,10 +15,14 @@ class auth {
 	var $user;
 	var $attr;
 
-	$admin_users = array('stef', 'florias');
-	$secretariat_users = array('mop09269');
-	$belong_to_di = array('ou=inftel,ou=schools,dc=uoa,dc=gr', 'ou=therinf,ou=schools,dc=uoa,dc=gr', 'ou=cmptsystapp,ou=schools,dc=uoa,dc=gr', 'ou=comssigpro,ou=schools,dc=uoa,dc=gr');
+	var $admin_users = array('stef', 'florias');
+	var $secretariat_users = array('mop09269');
+	var $belong_to_di = array('ou=inftel,ou=schools,dc=uoa,dc=gr',
+				  'ou=therinf,ou=schools,dc=uoa,dc=gr',
+				  'ou=cmptsystapp,ou=schools,dc=uoa,dc=gr',
+				  'ou=comssigpro,ou=schools,dc=uoa,dc=gr');
 	
+
 	function auth() {
 		phpCAS::setDebug(false);
 		phpCAS::client(SAML_VERSION_1_1, 'login.uoa.gr', 443, '');
