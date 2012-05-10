@@ -17,6 +17,7 @@ class auth {
 
 	$admin_users = array('stef', 'florias');
 	$secretariat_users = array('mop09269');
+	$belong_to_di = array('ou=inftel,ou=schools,dc=uoa,dc=gr', 'ou=therinf,ou=schools,dc=uoa,dc=gr', 'ou=cmptsystapp,ou=schools,dc=uoa,dc=gr', 'ou=comssigpro,ou=schools,dc=uoa,dc=gr');
 	
 	function auth() {
 		phpCAS::setDebug(false);
@@ -34,9 +35,17 @@ class auth {
 			$role = Admin;
 		} else if (in_array($this->user, $secretariat_users, true)) {
 			$role = Secretariat;
+		} else if ($this->attr['edupersonaffiliation'] == "faculty" || $this->attr['edupersonaffiliation'] == "affiliate") {
+			if(in_array($this->attr['edupersonorgunitdn'], $belong_to_di,true))
+				$role = Professor;
+		} else if ($this->attr['edupersonaffiliation'] == "student") {
+			if(in_array($this->attr['edupersonorgunitdn'], $belong_to_di,true))
+				$role = Student;	
 		} else {
 			die("Access denied");
 		}
+		
+		
 	}
 
 	function logout() {
