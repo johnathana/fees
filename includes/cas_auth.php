@@ -15,6 +15,8 @@ class auth {
 	var $user;
 	var $attr;
 
+	$admin_users = array('stef', 'florias');
+	$secretariat_users = array('mop09269');
 	
 	function auth() {
 		phpCAS::setDebug(false);
@@ -28,19 +30,12 @@ class auth {
 		$this->attr = phpCAS::getAttributes();
 		//echo $attr['title'];
 
-		switch ($this->attr['title']) {
-		case "admin":
+		if (in_array($this->user, $admin_users, true)) {
 			$role = Admin;
-			break;
-		case "professor":
-			$role = Professor;
-			break;
-		case "secretariat":
+		} else if (in_array($this->user, $secretariat_users, true)) {
 			$role = Secretariat;
-			break;
-		default:
-			$role = Student;
-			break;
+		} else {
+			die("Access denied");
 		}
 	}
 
@@ -53,3 +48,4 @@ class auth {
 $auth = new auth;
 
 ?>
+
