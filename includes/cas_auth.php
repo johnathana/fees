@@ -36,15 +36,15 @@ class auth {
 		//echo $attr['title'];
 
 		if (in_array($this->user, $admin_users, true)) {
-			$role = Admin;
+			$this->$role = Admin;
 		} else if (in_array($this->user, $secretariat_users, true)) {
-			$role = Secretariat;
+			$this->$role = Secretariat;
 		} else if ($this->attr['edupersonaffiliation'] == "faculty" || $this->attr['edupersonaffiliation'] == "affiliate") {
 			if(in_array($this->attr['edupersonorgunitdn'], $belong_to_di,true))
-				$role = Professor;
+				$this->$role = Professor;
 		} else if ($this->attr['edupersonaffiliation'] == "student") {
 			if(in_array($this->attr['edupersonorgunitdn'], $belong_to_di,true))
-				$role = Student;	
+				$this->$role = Student;	
 		} else {
 			die("Access denied");
 		}
