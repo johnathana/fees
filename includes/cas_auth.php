@@ -29,22 +29,21 @@ class auth {
 		phpCAS::setNoCasServerValidation();
 		phpCAS::forceAuthentication();
 
-		//global $user;
+	
 		$this->user = phpCAS::getUser();
-		//global $attr;
 		$this->attr = phpCAS::getAttributes();
-		//echo $attr['title'];
+		
 
-		if (in_array($this->user, $admin_users, true)) {
-			$this->role = Admin;
-		} else if (in_array($this->user, $secretariat_users, true)) {
-			$this->role = Secretariat;
+		if (in_array($this->user, $this->admin_users, true)) {
+			$this->role = self::Admin;
+		} else if (in_array($this->user, $this->secretariat_users, true)) {
+			$this->role = self::Secretariat;
 		} else if ($this->attr['edupersonaffiliation'] == "faculty" || $this->attr['edupersonaffiliation'] == "affiliate") {
-			if(in_array($this->attr['edupersonorgunitdn'], $belong_to_di,true))
-				$this->role = Professor;
+			if(in_array($this->attr['edupersonorgunitdn'], $this->belong_to_di,true)) {
+				$this->role = self::Professor; }
 		} else if ($this->attr['edupersonaffiliation'] == "student") {
-			if(in_array($this->attr['edupersonorgunitdn'], $belong_to_di,true))
-				$this->role = Student;	
+			if(in_array($this->attr['edupersonorgunitdn'], $this->belong_to_di,true)) {
+				$this->role = self::Student;	}
 		} else {
 			die("Access denied");
 		}
