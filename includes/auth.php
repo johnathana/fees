@@ -1,6 +1,6 @@
 <?php
 
-define("FAKE_AUTH", 1);
+define("FAKE_AUTH", 0);
 
 if (FAKE_AUTH)
 	include_once('includes/fake_auth.php');
