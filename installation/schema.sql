@@ -11,6 +11,15 @@ create table if not exists academic_year (
 ) character set 'utf8' collate 'utf8_general_ci';
 
 
+create table if not exists faculty (
+    id int unsigned not null auto_increment primary key,
+    title varchar(255)
+) character set 'utf8' collate 'utf8_general_ci';
+
+
+insert into faculty values (1, "Οικονομική και Διοίκηση των Τηλεπικοινωνιακών Δικτύων");
+
+
 create table if not exists work_offers (
     id int unsigned not null auto_increment primary key,
     professor_email varchar(255),
@@ -23,12 +32,14 @@ create table if not exists work_offers (
     hours smallint unsigned,
     deadline date,
     at_di boolean,
+    faculty_id int unsigned,
     academic_year_id int unsigned,
     winter_semester boolean,
     is_available boolean,
     has_expired boolean,
-	published boolean,
+    published boolean,
     addressed_for tinyint(1) unsigned not null, /* for working people: 1 partial time, 2 full time */
+    foreign key (faculty_id) references faculty(id),
     foreign key (academic_year_id) references academic_year(id)
 ) character set 'utf8' collate 'utf8_general_ci';
 
