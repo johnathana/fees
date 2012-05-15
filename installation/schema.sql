@@ -20,8 +20,26 @@ create table if not exists faculty (
 insert into faculty values (1, "Οικονομική και Διοίκηση των Τηλεπικοινωνιακών Δικτύων");
 
 
+create table if not exists workoffer_categories (
+    id int unsigned not null auto_increment primary key,
+    category varchar(255)
+) character set 'utf8' collate 'utf8_general_ci';
+
+
+insert into workoffer_categories values (1, "Επιτήρηση εργαστηρίων ελεύθερης πρόσβασης Τμήματος");
+insert into workoffer_categories values (2, "Υποστήριξη υλικοτεχνικής υποδομής τμήματος");
+insert into workoffer_categories values (3, "Υποστήριξη επιτροπών Τμήματος");
+insert into workoffer_categories values (4, "Επιτήρηση εξετάσεων (μόνο υποψήφιοι διδάκτορες)");
+insert into workoffer_categories values (5, "Διεξαγωγή φροντιστηρίων ή εργαστηρίων");
+insert into workoffer_categories values (6, "Διόρθωση φροντιστηριακών, εργαστηριακών ασκήσεων και εργασιών");
+insert into workoffer_categories values (7, "Επίβλεψη πτυχιακών και διπλωματικών εργασιών (μόνο υποψήφιοι διδάκτορες)");
+insert into workoffer_categories values (8, "Ανάπτυξη εκπαιδευτικού υλικού");
+insert into workoffer_categories values (9, "Επιπρόσθετη διδασκαλία ατόμων με ειδικές αναπηρίες");
+
+
 create table if not exists work_offers (
     id int unsigned not null auto_increment primary key,
+    category_id int unsigned,
     professor_email varchar(255),
     professor_name varchar(255),
     title varchar(255),
@@ -39,6 +57,7 @@ create table if not exists work_offers (
     has_expired boolean,
     published boolean,
     addressed_for tinyint(1) unsigned not null, /* for working people: 1 partial time, 2 full time */
+    foreign key (category_id) references workoffer_categories(id),
     foreign key (faculty_id) references faculty(id),
     foreign key (academic_year_id) references academic_year(id)
 ) character set 'utf8' collate 'utf8_general_ci';
