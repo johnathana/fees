@@ -21,10 +21,8 @@ class auth {
 			  'ou=comssigpro,ou=schools,dc=uoa,dc=gr');
 	
 	function auth() {
-		
-		
-		
-		$this->user = 'mop09269';
+
+		$this->user = 'mop09261';
 		$this->attr = array('mail' => 'mop09269@di.uoa.gr',
                'title'  => 'Postgraduate Student',
                'cn'   => 'John Ios',
@@ -32,21 +30,8 @@ class auth {
 			   'edupersonorgunitdn' => 'ou=inftel,ou=schools,dc=uoa,dc=gr');
 		
 		
-		if (in_array($this->user, $this->admin_users, true)) {
-			$this->role = self::Admin;
-		} else if (in_array($this->user, $this->secretariat_users, true)) {
-			$this->role = self::Secretariat;
-		} else if ($this->attr['edupersonaffiliation'] == "faculty" || $this->attr['edupersonaffiliation'] == "affiliate") {
-			if(in_array($this->attr['edupersonorgunitdn'], $this->belong_to_di,true)) {
-				$this->role = self::Professor; }
-		} else if ($this->attr['edupersonaffiliation'] == "student") {
-			if(in_array($this->attr['edupersonorgunitdn'], $this->belong_to_di,true)) {
-				$this->role = self::Student;	}
-		} else {
-			die("Access denied");
-		}
-	}
- 
+		$this->role = self::Professor;
+	} 
 }
 
 
