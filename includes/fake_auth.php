@@ -14,7 +14,7 @@ class auth {
 	var $attr;
 
 	var $admin_users = array('stef', 'florias');
-	var $secretariat_users = array('mop09269');
+	var $secretariat_users = array('mop09262');
 	var $belong_to_di = array('ou=inftel,ou=schools,dc=uoa,dc=gr',
 			  'ou=therinf,ou=schools,dc=uoa,dc=gr',
 			  'ou=cmptsystapp,ou=schools,dc=uoa,dc=gr',
@@ -24,11 +24,17 @@ class auth {
 		
 		
 		
-		$this->user = 'mop09269';
+		/*$this->user = 'mop09269';
 		$this->attr = array('mail' => 'mop09269@di.uoa.gr',
                'title'  => 'Postgraduate Student',
                'cn'   => 'John Ios',
 			   'edupersonaffiliation' => 'student',
+			   'edupersonorgunitdn' => 'ou=inftel,ou=schools,dc=uoa,dc=gr');*/
+		$this->user = 'mop09269';
+		$this->attr = array('mail' => 'ioaios@di.uoa.gr',
+               'title'  => 'Associate Professor',
+               'cn'   => 'John Ios',
+			   'edupersonaffiliation' => 'faculty',
 			   'edupersonorgunitdn' => 'ou=inftel,ou=schools,dc=uoa,dc=gr');
 		
 		

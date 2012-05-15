@@ -14,7 +14,7 @@ create table if not exists academic_year (
 create table if not exists faculty (
     id int unsigned not null auto_increment primary key,
     title varchar(255),
-	orgunitdn varchar(255)
+	edupersonorgunitdn varchar(255)
 ) character set 'utf8' collate 'utf8_general_ci';
 
 
