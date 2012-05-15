@@ -75,10 +75,9 @@ $jFormSection2 = new JFormSection($registration->id . 'Section2', array(
 
 // Add components to the section
 $jFormSection1->addJFormComponentArray(array(
-    new JFormComponentSingleLineText('title', 'Τίτλος παροχής:', array(
-        'validationOptions' => array('required')
-    )),
-    new JFormComponentSingleLineText('lesson', 'Τίτλος μαθήματος:'),
+	new JFormComponentSingleLineText('title', 'Τίτλος παροχής:', array(
+	    'validationOptions' => array('required')
+	)),
 	new JFormComponentDropDown('category', 'Κατηγορία παροχής:',$categoryarray,
 		array('validationOptions' => array('required')),
 		array('tip' => '<p>Επιλέξτε κατηγορία</p>')
@@ -133,12 +132,8 @@ $jFormSection1->addJFormComponentArray(array(
         'height' => 'medium',
 		'validationOptions' => array('required'),
 	)),
-	new JFormComponentSingleLineText('hours', 'Απαιτούμενες ώρες υλοποιήσης:', array(
+	new JFormComponentSingleLineText('hours', 'Απαιτούμενες ώρες υλοποιήσης (ανά άτομο) :', array(
         'validationOptions' => array('required','integer', 'maxLength' => 4),
-    )),
-	new JFormComponentMultipleChoice('at_di', '',
-            array(
-                array('value' => '1', 'label' => 'Στο χώρο του πανεπιστημίου'),
     )),
 	new JFormComponentMultipleChoice('winter_semester', '',
             array(
@@ -164,7 +159,6 @@ function onSubmit($formValues) {
 	global $auth;
 	
 	$title = trim(mysql_real_escape_string($formValues->registrationPage->registrationSection1->title));
-	$lesson = trim(mysql_real_escape_string($formValues->registrationPage->registrationSection1->lesson));
 	$candidates = trim(mysql_real_escape_string($formValues->registrationPage->registrationSection1->candidates));
 	$category_id = trim(mysql_real_escape_string($formValues->registrationPage->registrationSection1->category));
 	$faculty_id = trim(mysql_real_escape_string($formValues->registrationPage->registrationSection1->faculty));
@@ -172,14 +166,14 @@ function onSubmit($formValues) {
 	$deliverables = trim(mysql_real_escape_string($formValues->registrationPage->registrationSection1->deliverables));
 	$hours = trim(mysql_real_escape_string($formValues->registrationPage->registrationSection1->hours));
 	$addressed = trim(mysql_real_escape_string($formValues->registrationPage->registrationSection1->addressed_for));
-	$at_di = $formValues->registrationPage->registrationSection1->at_di[0];
-	$winter_semester = $formValues->registrationPage->registrationSection1->winter_semester[0];
+	//$winter_semester = $formValues->registrationPage->registrationSection1->winter_semester;
+	$winter_semester = 1;
 	$deadline = trim(mysql_real_escape_string($formValues->registrationPage->registrationSection1->deadline));
 	$year = get_current_year();
 	$academic_year_id = $year['id'];
 	
-	$query = "INSERT INTO work_offers (professor_email, professor_name, title, lesson, candidates, category_id, faculty_id, requirements, deliverables, hours, deadline, at_di, academic_year_id, winter_semester, is_available, has_expired, published, addressed_for) 
-	VALUES ('".$auth->attr['mail']."','".$auth->attr['cn']."','".$title."','".$lesson."','".$candidates."','".$category_id."','".$faculty_id."','".$requirements."','".$deliverables."','".$hours."','".$deadline."','".$at_di."','".$academic_year_id."','".$winter_semester."', true, false, false,'".$addressed."')";
+	$query = "INSERT INTO work_offers (professor_email, professor_name, title, lesson, candidates, category_id, faculty_id, requirements, deliverables, hours, deadline, academic_year_id, winter_semester, is_available, has_expired, published, addressed_for) 
+	VALUES ('".$auth->attr['mail']."','".$auth->attr['cn']."','".$title."','".$candidates."','".$category_id."','".$faculty_id."','".$requirements."','".$deliverables."','".$hours."','".$deadline."','".$academic_year_id."','".$winter_semester."', true, false, false,'".$addressed."')";
 	$result_set = mysql_query($query,$con);
 	confirm_query($result_set);
 
