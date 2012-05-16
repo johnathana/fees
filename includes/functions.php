@@ -17,10 +17,8 @@
 		global $con;
 		$row = get_current_year();//pernei to id tou current year
 		$current_year = $row['id'];
-		$prof_id = $id;
-		
-		switch($choice)
-		{
+
+		switch ($choice) {
 			case"211":
 				$query1 = "SELECT * FROM work_offers WHERE academic_year_id = '$current_year' AND has_expired = false";
 				$result_set1 = mysql_query($query1,$con);
@@ -91,14 +89,5 @@
 		$year = mysql_fetch_assoc($result_set);
 		return $year;
 	}
-    
-	function get_user_info($user_id)
-	{
-		global $con;
-		$query = "SELECT * FROM users WHERE id = '$user_id'";
-		$result = mysql_query($query, $con);
-		confirm_query($result);
-		$user_info = mysql_fetch_assoc($result);
-		return $user_info;
-	}
+
 ?>
