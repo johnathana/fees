@@ -10,7 +10,7 @@
 	}
 
 
-	function get_data($choice,$id)
+	function get_data($choice, $user)
 	{
 	//To 111 simainei trexondas didaskon-trexon etos-energes
 	//To 212 simainei oloi oi didaskondes-trexon etos-anenerges
@@ -46,41 +46,32 @@
 				return $result_set1;
 			break;
 			case"112":
-				$query1 = "SELECT * FROM work_offers WHERE professor_id = '$prof_id' AND academic_year_id = '$current_year' AND has_expired = true";
+				$query1 = "SELECT * FROM work_offers WHERE professor_name = '$user' AND academic_year_id = '$current_year' AND has_expired = true";
 				$result_set1 = mysql_query($query1,$con);
 				confirm_query($result_set1);
 				return $result_set1;
 			break;
 			case"121":
-				$query1 = "SELECT * FROM work_offers WHERE professor_id = '$prof_id' AND academic_year_id <> '$current_year' AND has_expired = false";
+				$query1 = "SELECT * FROM work_offers WHERE professor_name = '$user' AND academic_year_id <> '$current_year' AND has_expired = false";
 				$result_set1 = mysql_query($query1,$con);
 				confirm_query($result_set1);
 				return $result_set1;
 			break;
 			case"122":
-				$query1 = "SELECT * FROM work_offers WHERE professor_id = '$prof_id' AND academic_year_id <> '$current_year' AND has_expired = true";
+				$query1 = "SELECT * FROM work_offers WHERE professor_name = '$user' AND academic_year_id <> '$current_year' AND has_expired = true";
 				$result_set1 = mysql_query($query1,$con);
 				confirm_query($result_set1);
 				return $result_set1;
 			break;
 			default:
-				$query1 = "SELECT * FROM work_offers WHERE professor_id = '$prof_id' AND academic_year_id = '$current_year' AND has_expired = false";
+				$query1 = "SELECT * FROM work_offers WHERE professor_name = '$user' AND academic_year_id = '$current_year' AND has_expired = false";
 				$result_set1 = mysql_query($query1,$con);
 				confirm_query($result_set1);
 				return $result_set1;
 		}
 	}
-	
-	/*Βρίσκει το επιθετο μέσω του foreign key*/
-	function get_surname_from_professor_id($professor_id)
-	{
-		global $con;
-		$query1 = "SELECT surname FROM users WHERE id='$professor_id'";
-		$result_set1 = mysql_query($query1,$con);
-		confirm_query($result_set1);
-		$row1 = mysql_fetch_assoc($result_set1);
-		return $row1;
-	}
+
+
 	/*Βρίσκει το ακαδημαϊκό έτος μέσω του foreign key*/
 	function get_ayear_from_academic_year_id($academic_year_id)
 	{

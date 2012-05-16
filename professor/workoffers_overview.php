@@ -158,7 +158,7 @@
 				if (isset($_GET['choice']))
 				{  
 					$choice = $_GET['choice'];
-					$result = get_data($choice,$auth->id);
+					$result = get_data($choice, $auth->id);
 				}
 				else
 				{
@@ -223,10 +223,9 @@
 							else
 								{$student_type="Πλήρως εργαζόμενο";}
 							/*Βρίσκουμε τις τιμές που θέλουμε μέσω των ξένων κλειδιών*/
-							$row1 = get_surname_from_professor_id($professor_id);
 							$row2 = get_ayear_from_academic_year_id($academic_year_id);
-							echo "<td>$id</td><td>$row1[surname]</td>
-								<td>$title</td><td>$lesson</td><td>$candidates</td><td>$requirements</td><td>$deliverables</td>
+							echo "<td>$id</td><td></td>
+								<td>$title</td><td>$professor_name</td><td>$candidates</td><td>$requirements</td><td>$deliverables</td>
 								<td>$hours</td><td>$deadline</td><td>";
 							if($at_di==false)
 								echo "<input type='checkbox' disabled='true'>";

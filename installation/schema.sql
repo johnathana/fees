@@ -10,6 +10,7 @@ create table if not exists academic_year (
     is_current boolean
 ) character set 'utf8' collate 'utf8_general_ci';
 
+insert into academic_year value (1, "2011-2012", true);
 
 create table if not exists faculty (
     id int unsigned not null auto_increment primary key,

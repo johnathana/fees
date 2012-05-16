@@ -78,11 +78,11 @@ $jFormSection1->addJFormComponentArray(array(
 	new JFormComponentSingleLineText('title', 'Τίτλος παροχής:', array(
 	    'validationOptions' => array('required')
 	)),
-	new JFormComponentDropDown('category', 'Κατηγορία παροχής:',$categoryarray,
+	new JFormComponentDropDown('category', 'Κατηγορία παροχής:', $categoryarray,
 		array('validationOptions' => array('required')),
 		array('tip' => '<p>Επιλέξτε κατηγορία</p>')
 	),
-	new JFormComponentDropDown('faculty', 'Κατηγορία μεταπτυχιακού:',$facultyarray,
+	new JFormComponentDropDown('faculty', 'Κατηγορία μεταπτυχιακού:', $facultyarray,
 		array('validationOptions' => array('required')),
 		array('tip' => '<p>Επιλέξτε κατηγορία</p>')
 	),
@@ -153,7 +153,6 @@ $registration->addJFormPage($jFormPage1);
 
 // Set the function for a successful form submission
 function onSubmit($formValues) {
-	
 
 	global $con;
 	global $auth;
@@ -169,11 +168,14 @@ function onSubmit($formValues) {
 	//$winter_semester = $formValues->registrationPage->registrationSection1->winter_semester;
 	$winter_semester = 1;
 	$deadline = trim(mysql_real_escape_string($formValues->registrationPage->registrationSection1->deadline));
-	$year = get_current_year();
-	$academic_year_id = $year['id'];
-	
-	$query = "INSERT INTO work_offers (professor_email, professor_name, title, lesson, candidates, category_id, faculty_id, requirements, deliverables, hours, deadline, academic_year_id, winter_semester, is_available, has_expired, published, addressed_for) 
-	VALUES ('".$auth->attr['mail']."','".$auth->attr['cn']."','".$title."','".$candidates."','".$category_id."','".$faculty_id."','".$requirements."','".$deliverables."','".$hours."','".$deadline."','".$academic_year_id."','".$winter_semester."', true, false, false,'".$addressed."')";
+	//$year = get_current_year();
+	//$academic_year_id = $year['id'];
+	$academic_year_id = 1;
+
+
+	$query = "INSERT INTO work_offers (professor_email, professor_name, title, candidates, category_id, faculty_id, requirements, deliverables, hours, deadline, academic_year_id, winter_semester, is_available, has_expired, published, addressed_for) 
+	VALUES ('".$auth->attr['mail']."','".$auth->attr['cn']."','".$title."','".$candidates."','".$category_id."','".$faculty_id."','".$requirements."','".$deliverables."','".$hours."','".$deadline."','".$academic_year_id."','".$winter_semester."', true, false, false,'".$addressed."');";
+
 	$result_set = mysql_query($query,$con);
 	confirm_query($result_set);
 
@@ -181,6 +183,7 @@ function onSubmit($formValues) {
 		'successPageHtml' => '<h2>Η παροχή καταχωρήθηκε</h2><br>
 		<input type="button" name="menu" value="Αρχικό μενού" class="button" onClick="window.location.href=\'/professor/prof_menu.php\'"/>'
 	);
+
 	return array('failureHtml' => '<h2>Η παροχή δεν καταχωρήθηκε</h2>');
 }
 
