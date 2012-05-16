@@ -6,6 +6,7 @@ include_once('includes/CAS.php');
 class auth {
 
 	var $role = 0;
+	var $faculty_id = 0;
 
 	const Student = 0;
 	const Admin = 1;
@@ -33,7 +34,34 @@ class auth {
 		$this->user = phpCAS::getUser();
 		$this->attr = phpCAS::getAttributes();
 		
-
+		if ($this->attr['edupersonaffiliation'] == "student"){
+			switch ($this->attr['edupersonorgunitdn']){
+				case 'ou=ypoloepi,ou=postgrads,dc=uoa,dc=gr' :
+				$this->faculty_id = 1;
+				break;
+				case 'ou=proplirosyst,ou=postgrads,dc=uoa,dc=gr' :
+				$this->faculty_id = 2;
+				break;
+				case 'ou=tecsystiypolo,ou=postgrads,dc=uoa,dc=gr' :
+				$this->faculty_id = 3;
+				break;
+				case 'ou=systepikdikt,ou=postgrads,dc=uoa,dc=gr' :
+				$this->faculty_id = 4;
+				break;
+				case 'ou=epexsimatepik,ou=postgrads,dc=uoa,dc=gr' :
+				$this->faculty_id = 5;
+				break;
+				case 'ou=neestechpli,ou=postgrads,dc=uoa,dc=gr' :
+				$this->faculty_id = 6;
+				break;
+				case 'ou=dioioikontilep,ou=postgrads,dc=uoa,dc=gr' :
+				$this->faculty_id = 7;
+				break;
+				default :
+				$this->faculty_id = 0;
+				break;
+			}
+		}
 		if (in_array($this->user, $this->admin_users, true)) {
 			$this->role = self::Admin;
 		} else if (in_array($this->user, $this->secretariat_users, true)) {
