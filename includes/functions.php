@@ -10,7 +10,7 @@
 	}
 
 
-	function get_data($choice, $user)
+	function get_data($choice, $email)
 	{
 	//To 111 simainei trexondas didaskon-trexon etos-energes
 	//To 212 simainei oloi oi didaskondes-trexon etos-anenerges
@@ -44,25 +44,25 @@
 				return $result_set1;
 			break;
 			case"112":
-				$query1 = "SELECT * FROM work_offers WHERE professor_name = '$user' AND academic_year_id = '$current_year' AND has_expired = true";
+				$query1 = "SELECT * FROM work_offers WHERE professor_email = '$email' AND academic_year_id = '$current_year' AND has_expired = true";
 				$result_set1 = mysql_query($query1,$con);
 				confirm_query($result_set1);
 				return $result_set1;
 			break;
 			case"121":
-				$query1 = "SELECT * FROM work_offers WHERE professor_name = '$user' AND academic_year_id <> '$current_year' AND has_expired = false";
+				$query1 = "SELECT * FROM work_offers WHERE professor_email = '$email' AND academic_year_id <> '$current_year' AND has_expired = false";
 				$result_set1 = mysql_query($query1,$con);
 				confirm_query($result_set1);
 				return $result_set1;
 			break;
 			case"122":
-				$query1 = "SELECT * FROM work_offers WHERE professor_name = '$user' AND academic_year_id <> '$current_year' AND has_expired = true";
+				$query1 = "SELECT * FROM work_offers WHERE professor_email = '$email' AND academic_year_id <> '$current_year' AND has_expired = true";
 				$result_set1 = mysql_query($query1,$con);
 				confirm_query($result_set1);
 				return $result_set1;
 			break;
 			default:
-				$query1 = "SELECT * FROM work_offers WHERE professor_name = '$user' AND academic_year_id = '$current_year' AND has_expired = false";
+				$query1 = "SELECT * FROM work_offers WHERE professor_email = '$email' AND academic_year_id = '$current_year' AND has_expired = false";
 				$result_set1 = mysql_query($query1,$con);
 				confirm_query($result_set1);
 				return $result_set1;
