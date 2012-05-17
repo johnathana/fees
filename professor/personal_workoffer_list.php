@@ -256,9 +256,7 @@
 				</tr>
 				</table>
 				<?php
-					switch ($auth->is_admin) {
-					case auth::Student :
-						die("Unauthorized access");
+					switch ($auth->role) {
 					case auth::Admin :
 						$query = "SELECT * FROM work_offers WHERE has_expired = true";//fere tis anenerges paroxes olwn twn kathigitwn 
 						$result_set = mysql_query($query,$con);
@@ -284,9 +282,7 @@
 				</tr>
 				</table>
 				<?php
-					switch ($auth->is_admin) {
-					case auth::Student :
-						die("Unauthorized access");
+					switch ($auth->role) {
 					case auth::Admin :
 						$query = "SELECT * FROM work_offers WHERE has_expired = false";//fere tis energes paroxes olwn twn kathigitwn 
 						$result_set = mysql_query($query,$con);
