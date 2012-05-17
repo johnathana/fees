@@ -88,7 +88,7 @@
 						}
 						else
 						{
-							$query = "INSERT INTO work_applications (student_email, student_name, work_id) values ('$stud_email', $stud_name, '$workoffer_id')";
+							$query = "INSERT INTO work_applications (student_email, student_name, work_id) values ('$stud_email', '$stud_name', '$workoffer_id')";
 							if (!mysql_query($query,$con))
 							{
 								die('Error: ' . mysql_error());
@@ -148,22 +148,14 @@
 								{
 									echo "<tr>";
 								}
-								if($addressed_for==0)
-								{$student_type="Μη εργαζόμενο";}
-								elseif($addressed_for==1)
-								{$student_type="Μερικώς εργαζόμενο";}
-								else
-								{$student_type="Πλήρως εργαζόμενο";}
+								
 								/*Βρίσκουμε τις τιμές που θέλουμε μέσω των ξένων κλειδιών*/
 								//$row2 = get_surname_from_professor_id($professor_id);
 								$row3 = get_ayear_from_academic_year_id($academic_year_id);
 								echo "<td>$id</td><td>$professor_name</td>
 									<td>$title</td><td>$lesson</td><td>$candidates</td><td>$requirements</td><td>$deliverables</td>
 									<td>$hours</td><td>$deadline</td><td>";
-								if($at_di==false)
-								echo "<input type='checkbox' disabled='true'>";
-								else
-								echo"<input type='checkbox' disabled='true' checked='true'>";
+ 
 								echo "</td><td>$row3[ayear]</td><td>";
 								if($winter_semester==false)
 								echo "<input type='checkbox' disabled='true'>";

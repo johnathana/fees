@@ -34,7 +34,7 @@ class auth {
 		$this->user = phpCAS::getUser();
 		$this->attr = phpCAS::getAttributes();
 		
-		if ($this->attr['edupersonaffiliation'] == "student"){
+		if ($this->attr['edupersonaffiliation'] == "student") {
 			switch ($this->attr['edupersonorgunitdn']){
 				case 'ou=ypoloepi,ou=postgrads,dc=uoa,dc=gr' :
 				$this->faculty_id = 1;

@@ -3,7 +3,8 @@
 
 class auth {
 
-	var $role =0;
+	var $role = 0;
+	var $faculty_id = 7;
 	
 	const Student = 0;
 	const Admin = 1;
@@ -16,13 +17,13 @@ class auth {
 	function auth() {
 
 		$this->user = 'mop09261';
-		$this->attr = array('mail' => 'ioaios@di.uoa.gr',
-               'title'  => 'Associate Professor',
+		$this->attr = array('mail' => 'mop09261@di.uoa.gr',
+               'title'  => 'JOHN',
                'cn'   => 'John Ios',
-			   'edupersonaffiliation' => 'faculty',
+			   'edupersonaffiliation' => 'student',
 			   'edupersonorgunitdn' => 'ou=inftel,ou=schools,dc=uoa,dc=gr');
 
-		$this->role = self::Professor;
+		$this->role = self::Student;
 	} 
 }
 
