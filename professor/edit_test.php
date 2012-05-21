@@ -24,25 +24,50 @@
 	{
 		die();
 	}
-	
+	if ( is_numeric($_GET['id']) ) {
+	$auth->work_id = $_GET['id'];
+	}
 	$query = "SELECT * FROM work_offers WHERE id='".$_GET['id']."'";
 	$result_set = mysql_query($query,$con);
 	confirm_query($result_set);
 	$row = mysql_fetch_assoc($result_set);
 	extract($row);
+	$query1 = "SELECT * FROM faculty WHERE id='$faculty_id'";
+	$result_set1 = mysql_query($query1,$con);
+	confirm_query($result_set1);
+	$faculty_row = mysql_fetch_assoc($result_set1);
+	$query2 = "SELECT * FROM workoffer_categories WHERE id='$category_id'";
+	$result_set2 = mysql_query($query2,$con);
+	confirm_query($result_set2);
+	$category_row = mysql_fetch_assoc($result_set2);
+	$query3 = "SELECT * FROM workoffer_categories";
+	$resultset3 = mysql_query($query3,$con);
+	confirm_query($resultset3);
+	$categoryarray = array();
+	while ($row3 = mysql_fetch_array($resultset3))
+	{	
+		array_push($categoryarray, array ('value' => $row3["id"], 'label' => $row3["category"]));  
+	}
+	$query4 = "SELECT * FROM faculty";
+	$resultset4 = mysql_query($query4,$con);
+	confirm_query($resultset4);
+	$facultyarray = array();
+	while ($row4 = mysql_fetch_array($resultset4))
+	{	
+		array_push($facultyarray, array ('value' => $row4["id"], 'label' => $row4["title"]));  
+	}
+	
 ?>
 
 	<script type="text/javascript">
 		$(document).ready(function() {
 			$("#title").val("<?php echo $title; ?>");
-			$("#lesson").val("<?php echo $lesson; ?>");
+			$("#category").val('<?php echo $category_row['category']; ?>');
+			$("#faculty").val('<?php echo $faculty_row['title']; ?>');
 			$("#candidates").val('<?php echo $candidates; ?>');
-			$("#addressed_for").val('<?php echo $addressed_for; ?>');
 			$("#requirements").val("<?php echo $requirements; ?>");
 			$("#deliverables").val("<?php echo $deliverables; ?>");
 			$("#hours").val("<?php echo $hours; ?>");
-
-			$('input[name=at_di]').attr('checked', '<? echo $at_di; ?>');
 			$('input[name=winter_semester]').attr('checked', '<? echo $winter_semester; ?>');
 			$('input[name=is_available]').attr('checked', '<? echo $is_available; ?>');
 
@@ -86,9 +111,14 @@ $jFormSection1->addJFormComponentArray(array(
     new JFormComponentSingleLineText('title', 'Τίτλος παροχής:', array(
         'validationOptions' => array('required')
     )),
-    new JFormComponentSingleLineText('lesson', 'Τίτλος μαθήματος:', array(
-        'validationOptions' => array('required')
-    )),
+	new JFormComponentDropDown('category', 'Κατηγορία παροχής:', $categoryarray,
+		array('validationOptions' => array('required')),
+		array('tip' => '<p>Επιλέξτε κατηγορία</p>')
+	),
+	new JFormComponentDropDown('faculty', 'Κατηγορία μεταπτυχιακού:', $facultyarray,
+		array('validationOptions' => array('required')),
+		array('tip' => '<p>Επιλέξτε κατηγορία</p>')
+	),
     new JFormComponentDropDown('candidates', 'Αριθμός υποψηφίων:',
 		array(
 			array(
@@ -109,22 +139,6 @@ $jFormSection1->addJFormComponentArray(array(
 			),
 			'validationOptions' => array('required')
 	)),
-	new JFormComponentDropDown('addressed_for', 'Απευθύνεται σε φοιτητή:',
-		array(
-			array(
-				'value' => '0',
-				'label' => 'Μη εργαζόμενο'
-			),
-			array(
-				'value' => '1',
-				'label' => 'Μερικώς εργαζόμενο'
-			),
-			array(
-				'value' => '2',
-				'label' => 'Πλήρως εργαζόμενο'
-			),
-			'validationOptions' => array('required')
-	)),
 	new JFormComponentTextArea('requirements', 'Απαιτήσεις γνώσεων:', array(
 		'width' => 'medium',
         'height' => 'medium',
@@ -138,21 +152,17 @@ $jFormSection1->addJFormComponentArray(array(
 	new JFormComponentSingleLineText('hours', 'Απαιτούμενες ώρες υλοποιήσης:', array(
         'validationOptions' => array('required','integer', 'maxLength' => 4),
     )),
-	new JFormComponentMultipleChoice('at_di', '',
-            array(
-                array('value' => 'true', 'label' => 'Στο χώρο του di'),
-    )),
 	new JFormComponentMultipleChoice('winter_semester', '',
             array(
-                array('value' => 'true', 'label' => 'Χειμερινού εξαμήνου'),
+                array('value' => '1', 'label' => 'Χειμερινού εξαμήνου'),
     )),
 	new JFormComponentMultipleChoice('is_available', '',
             array(
-                array('value' => 'true', 'label' => 'Απενεργοποίηση παροχής'),
+                array('value' => '1', 'label' => 'Απενεργοποίηση παροχής'),
     )),
-	new JFormComponentDate('deadline', 'Ημερομηνία λήξης:', array(
-		'validationOptions' => array('required'),
-	)),
+	new JFormComponentSingleLineText('deadline', 'Ημερομηνία λήξης:', array(
+        'validationOptions' => array('required')
+    )),
 ));
 
 // Add the section to the page
@@ -164,21 +174,24 @@ $registration->addJFormPage($jFormPage1);
 
 // Set the function for a successful form submission
 function onSubmit($formValues) {
-	return array('failureHtml' => json_encode($formValues));
+	//return array('failureHtml' => json_encode($formValues));
 
 	global $con;
-	
+	global $auth;
+	return array('failureHtml' => '<h2>Η παροχή δεν καταχωρήθηκε</h2>');
+	$id = $auth->work_id;
 	$title = trim(mysql_real_escape_string($formValues->registrationPage->registrationSection1->title));
-	$lesson = trim(mysql_real_escape_string($formValues->registrationPage->registrationSection1->lesson));
 	$candidates = trim(mysql_real_escape_string($formValues->registrationPage->registrationSection1->candidates));
+	$category_id = trim(mysql_real_escape_string($formValues->registrationPage->registrationSection1->category));
+	$faculty_id = trim(mysql_real_escape_string($formValues->registrationPage->registrationSection1->faculty));
 	$requirements = trim(mysql_real_escape_string($formValues->registrationPage->registrationSection1->requirements));
 	$deliverables = trim(mysql_real_escape_string($formValues->registrationPage->registrationSection1->deliverables));
 	$hours = trim(mysql_real_escape_string($formValues->registrationPage->registrationSection1->hours));
-	$addressed = trim(mysql_real_escape_string($formValues->registrationPage->registrationSection1->addressed_for));
-	$is_available = trim(mysql_real_escape_string($formValues->registrationPage->registrationSection1->is_available));
+	$winter_semester = trim(mysql_real_escape_string($formValues->registrationPage->registrationSection1->winter_semester[0]));
+	$is_available = trim(mysql_real_escape_string($formValues->registrationPage->registrationSection1->is_available[0]));
 	$deadline = trim(mysql_real_escape_string($formValues->registrationPage->registrationSection1->deadline));
 
-	$query = "UPDATE work_offers SET title = '$title', lesson = '$lesson', candidates = '$candidates',  requirements = '$requirements', deliverables = '$deliverables', hours = '$hours', deadline = '$deadline', at_di = '$at_di', winter_semester = '$winter', is_available = '$is_available', addressed_for = '$addressed' WHERE id='$id'";
+	$query = "UPDATE work_offers SET title = '$title',category_id = '$category_id', faculty_id = '$faculty_id', candidates = '$candidates',  requirements = '$requirements', deliverables = '$deliverables', hours = '$hours', deadline = '$deadline', winter_semester = '$winter_semester', is_available = '$is_available' WHERE id='$id'";
 
 
 	$result_set = mysql_query($query,$con);

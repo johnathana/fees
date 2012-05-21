@@ -29,18 +29,15 @@
 			"bScrollCollapse": true,
 			"aoColumns": [
 					/* WorkOfferId */{"bVisible": false },
-					/* Professor */null,
+					/* Professor name */null,
 					/* Title */null,
-					/* Lesson */null,
 					/* Candidates */null,
 					/* Requirements*/null,
 					/* Deliverables */null,
 					/* Hours */null,
 					/* Deadline */null,
-					/* At_di */null,
 					/* Acad_year */null,
-					/* Winter */null,
-					/* Addressed */null
+					/* Winter */null
 			]
 		});
 		
@@ -61,11 +58,7 @@
 			var str = '<input type="hidden" name="id" value="'+workid+'"/>';
 			$('#demo').html(str);
 		});
-		$('input[name=menu1]').click(function()
-		{
-			window.location.href="/admin/admin_menu.php";
-		});
-		$('input[name=menu2]').click(function()
+		$('input[name=menu]').click(function()
 		{
 			window.location.href="/professor/prof_menu.php";
 		});
@@ -91,7 +84,7 @@
 			}
 			else //έχει επιλεγεί κάποια παροχή
 			{
-				window.location.href="edit_workoffer.php?id="+workid+"";
+				window.location.href="edit_test.php?id="+workid+"";
 			}
 		}
 		function check_redirect2()
@@ -149,17 +142,11 @@
 		{
 			$workoffer_id = $_POST['id'];
 			$title = trim($_POST['title']);
-			$lesson = trim($_POST['lesson']);
 			$candidates = trim($_POST['candidates']);
 			$requirements = trim($_POST['requirements']);
 			$deliverables = trim($_POST['deliverables']);
 			$hours = trim($_POST['hours']);
-			$addressed = ($_POST['addressed']);
 			$deadline = ($_POST['deadline']);
-			if (isset($_POST['at_di']))
-				$at_di = ($_POST['at_di'] == "on"  ? 1 : 0);
-			else
-				$at_di = 0;	
 			if (isset($_POST['winter'])) 
 				$winter = ($_POST['winter'] == "on" ? 1 : 0);
 			else 
@@ -256,18 +243,9 @@
 				</tr>
 				</table>
 				<?php
-					switch ($auth->role) {
-					case auth::Admin :
-						$query = "SELECT * FROM work_offers WHERE has_expired = true";//fere tis anenerges paroxes olwn twn kathigitwn 
+						$query = "SELECT * FROM work_offers WHERE professor_email = '".$auth->mail."' AND has_expired = true";//fere tis anenerges paroxes enos kathigiti
 						$result_set = mysql_query($query,$con);
 						confirm_query($result_set);
-						break;
-					case auth::Professor :
-						$query = "SELECT * FROM work_offers WHERE professor_email = '".$auth->attr['mail']."' AND has_expired = true";//fere tis anenerges paroxes enos kathigiti
-						$result_set = mysql_query($query,$con);
-						confirm_query($result_set);
-						break;
-					}
 				}
 				else { 
 				?>
@@ -282,18 +260,9 @@
 				</tr>
 				</table>
 				<?php
-					switch ($auth->role) {
-					case auth::Admin :
-						$query = "SELECT * FROM work_offers WHERE has_expired = false";//fere tis energes paroxes olwn twn kathigitwn 
+						$query = "SELECT * FROM work_offers WHERE professor_email = '".$auth->mail."' AND has_expired = false";//fere tis anenerges paroxes enos kathigiti
 						$result_set = mysql_query($query,$con);
 						confirm_query($result_set);
-						break;
-					case auth::Professor :
-						$query = "SELECT * FROM work_offers WHERE professor_email = '".$auth->attr['mail']."' AND has_expired = false";//fere tis anenerges paroxes enos kathigiti
-						$result_set = mysql_query($query,$con);
-						confirm_query($result_set);
-						break;
-					}
 				}
 				?>
 				
@@ -301,18 +270,15 @@
 				<thead>
 					<tr>
 						<th>ID παροχής</th>
-						<th>Καθηγητής</th>
 						<th>Τίτλος παροχής</th>
-						<th>Τίτλος μαθήματος</th>
+						<th>Καθηγητής</th>
 						<th>Αριθμός υποψηφίων</th>
 						<th>Απαιτήσεις γνώσεων</th>
 						<th>Παραδοτέα </th>
 						<th>Απαιτούμενες ώρες υλοποίησης</th>
 						<th>Λήξη προθεσμίας</th>
-						<th>Στο χώρο του πανεπιστημίου</th>
 						<th>Ακαδημαϊκό έτος</th>
 						<th>Χειμερινού εξαμήνου</th>
-						<th>Απευθύνεται σε φοιτητή</th>
 					</tr>
 				</thead>
 				<tbody>	
@@ -320,29 +286,12 @@
 						{
 							echo "<tr>";
 							extract($row);
-							if($addressed_for==0)
-								{$student_type="Μη εργαζόμενο";}
-							elseif($addressed_for==1)
-								{$student_type="Μερικώς εργαζόμενο";}
-							else
-								{$student_type="Πλήρως εργαζόμενο";}
 							/*Βρίσκουμε τις τιμές που θέλουμε μέσω των ξένων κλειδιών*/
 							//$row1 = get_surname_from_professor_id($professor_id);
-							$row2 = get_ayear_from_academic_year_id($academic_year_id);
-							echo "<td>$id</td><td>$professor_name</td>
-								<td>$title</td><td>$lesson</td><td>$candidates</td><td>$requirements</td><td>$deliverables</td>
-								<td>$hours</td><td>$deadline</td><td>";
-							if($at_di==false)
-								echo "<input type='checkbox' disabled='true'>";
-							else
-								echo"<input type='checkbox' disabled='true' checked='true'>";
-							echo "</td><td>$row2[ayear]</td><td>";
-							if($winter_semester==false)
-								echo "<input type='checkbox' disabled='true'>";
-							else
-								echo"<input type='checkbox' disabled='true' checked='true'>";
-							echo"</td><td>$student_type</td>";
-							echo "</tr>";
+							$ayear_row = get_ayear_from_academic_year_id($academic_year_id);
+							echo "<td>$id</td><td>$title</td><td>$professor_name</td><td>$candidates</td><td>$requirements</td><td>$deliverables</td><td>$hours</td><td>$deadline</td><td>$ayear_row[ayear]</td>";
+							echo "<td><input type='checkbox' disabled='true' " . (($winter_semester == 1) ? "checked='true'" : "checked='false'") . ">";
+							echo "</td></tr>";
 						}			
 				?>	
 				</tbody>
@@ -350,14 +299,7 @@
 				
 				<br />
 				<p>
-					
-					<?php switch ($auth->is_admin) {
-					case auth::Admin :?>
-					<input type="button" id="admin" name="menu1" value="Αρχικό μενού" class="button"/>
-					<?php	break;
-					case auth::Professor :?>
-					<input type="button" id="prof" name="menu2" value="Αρχικό μενού" class="button"/>
-					<?php	break;	}?>
+					<input type="button" id="prof" name="menu" value="Αρχικό μενού" class="button"/>
 					<input class="button" type="button" id="edit_btn" onClick="check_redirect1();" value="Επεξεργασία"  />
 					<input class="button" type="button" id="apps_btn" onClick="check_redirect2();" value="Αιτήσεις για αυτήν την παροχή"  />
 				</p>

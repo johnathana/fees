@@ -15,6 +15,7 @@ class auth {
 
 	var $user;
 	var $attr;
+	var $mail;
 
 	var $admin_users = array('stef', 'florias');
 	var $secretariat_users = array('mop09269');
@@ -33,6 +34,7 @@ class auth {
 	
 		$this->user = phpCAS::getUser();
 		$this->attr = phpCAS::getAttributes();
+		$this->mail = $this->attr['mail'];
 		
 		if ($this->attr['edupersonaffiliation'] == "student") {
 			switch ($this->attr['edupersonorgunitdn']){

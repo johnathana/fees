@@ -27,18 +27,15 @@
 		"bScrollCollapse": true,
 		"aoColumns": [
 					/* WorkOfferId */{"bVisible": false },
-					/* Professor */null,
+					/* Professor name */null,
 					/* Title */null,
-					/* Lesson */null,
 					/* Candidates */null,
 					/* Requirements*/null,
 					/* Deliverables */null,
 					/* Hours */null,
 					/* Deadline */null,
-					/* At_di */null,
 					/* Acad_year */null,
 					/* Winter */null,
-					/* Addressed */null
         ]
 		});
 		
@@ -104,7 +101,7 @@
 							
 						}
 					}
-					$stud_email = $auth->attr['mail'];
+					$stud_email = $auth->mail;
 					$query = "SELECT work_id,accepted FROM work_applications WHERE student_email='$stud_email'";
 					$result_set = mysql_query($query,$con);
 					confirm_query($result_set);
@@ -114,18 +111,15 @@
 				<thead>
 					<tr>
 						<th>ID παροχής</th>
-						<th>Καθηγητής</th>
 						<th>Τίτλος παροχής</th>
-						<th>Τίτλος μαθήματος</th>
+						<th>Καθηγητής</th>
 						<th>Αριθμός υποψηφίων</th>
 						<th>Απαιτήσεις γνώσεων</th>
 						<th>Παραδοτέα </th>
 						<th>Απαιτούμενες ώρες υλοποίησης</th>
 						<th>Λήξη προθεσμίας</th>
-						<th>Στο χώρο του di</th>
 						<th>Ακαδημαϊκό έτος</th>
 						<th>Χειμερινού εξαμήνου</th>
-						<th>Απευθύνεται σε φοιτητή</th>
 					</tr>
 				</thead>
 				<tbody>	
@@ -140,29 +134,14 @@
 							while($row1 = mysql_fetch_assoc($result_set1))
 							{
 								extract($row1);
-								if($acceptance==1)//exei ginei dektos o foititis
-								{
-									echo "<tr class = 'high'>";
-								}
-								else
-								{
-									echo "<tr>";
-								}
+								echo "<tr".(($acceptance==1) ? "<class = 'high'>" : ">");
 								
 								/*Βρίσκουμε τις τιμές που θέλουμε μέσω των ξένων κλειδιών*/
 								//$row2 = get_surname_from_professor_id($professor_id);
-								$row3 = get_ayear_from_academic_year_id($academic_year_id);
-								echo "<td>$id</td><td>$professor_name</td>
-									<td>$title</td><td>$lesson</td><td>$candidates</td><td>$requirements</td><td>$deliverables</td>
-									<td>$hours</td><td>$deadline</td><td>";
- 
-								echo "</td><td>$row3[ayear]</td><td>";
-								if($winter_semester==false)
-								echo "<input type='checkbox' disabled='true'>";
-								else
-								echo"<input type='checkbox' disabled='true' checked='true'>";
-								echo"</td><td>$student_type</td>";
-								echo "</tr>";
+								$ayear_row = get_ayear_from_academic_year_id($academic_year_id);
+								echo "<td>$id</td><td>$title</td><td>$professor_name</td><td>$candidates</td><td>$requirements</td><td>$deliverables</td><td>$hours</td><td>$deadline</td><td>$ayear_row[ayear]</td>";
+								echo "<td><input type='checkbox' disabled='true' " . (($winter_semester == 1) ? "checked='true'" : "checked='false'") . ">";
+								echo "</td></tr>\n";
 							}
 						}	
 				?>	

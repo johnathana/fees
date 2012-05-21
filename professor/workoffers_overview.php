@@ -155,12 +155,12 @@
 				if (isset($_GET['choice']))
 				{  
 					$choice = $_GET['choice'];
-					$result = get_data($choice, $auth->attr['mail']);
+					$result = get_data($choice, $auth->mail);
 				}
 				else
 				{
 					$choice = "111";//proswpikes-trexon etos-energes
-					$result = get_data($choice, $auth->attr['mail']);
+					$result = get_data($choice, $auth->mail);
 				}
 				?>
 				<table style="width: 300px">
@@ -209,7 +209,6 @@
 				<?php	while($row = mysql_fetch_assoc($result))
 						{
 							extract($row);
-							
 							echo "<tr>\n";
 
 							/*Βρίσκουμε τις τιμές που θέλουμε μέσω των ξένων κλειδιών*/

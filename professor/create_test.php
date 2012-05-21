@@ -159,7 +159,7 @@ function onSubmit($formValues) {
 
 
 	$query = "INSERT INTO work_offers (professor_email, professor_name, title, candidates, category_id, faculty_id, requirements, deliverables, hours, deadline, academic_year_id, winter_semester, is_available, has_expired, published) 
-	VALUES ('".$auth->attr['mail']."','".$auth->attr['cn']."','".$title."','".$candidates."','".$category_id."','".$faculty_id."','".$requirements."','".$deliverables."','".$hours."','".$deadline."','".$academic_year_id."','".$winter_semester."', true, false, false);";
+	VALUES ('".$auth->mail."','".$auth->attr['cn']."','".$title."','".$candidates."','".$category_id."','".$faculty_id."','".$requirements."','".$deliverables."','".$hours."','".$deadline."','".$academic_year_id."','".$winter_semester."', true, false, false);";
 
 	$result_set = mysql_query($query,$con);
 	confirm_query($result_set);

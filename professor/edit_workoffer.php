@@ -87,9 +87,6 @@
 							<td>Τίτλος παροχής</td><td><input type="text" name="title" value="<?php echo $title;?>" /></td>
 						</tr>
 						<tr>
-							<td>Τίτλος μαθήματος</td><td><input type="text" name="lesson" value="<?php echo $lesson;?>" /></td>
-						</tr>
-						<tr>
 							<td>Αριθμός υποψηφίων</td>
 							<td><select name="candidates">
 							<?php for($i=mysql_num_rows($workapps);$i<5;$i++)
@@ -100,13 +97,6 @@
 							</select></td>
 						</tr>
 						<tr>
-							<td>Απευθύνεται σε φοιτητή</td><td><select name="addressed">
-							  <option value="0" <?php if ($addressed_for == 0) { ?> selected="selected"<?php } ?> >Μη εργαζόμενο</option>
-							  <option value="1" <?php if ($addressed_for == 1) { ?> selected="selected"<?php } ?> >Μερικώς εργαζόμενο</option>
-							  <option value="2" <?php if ($addressed_for == 2) { ?> selected="selected"<?php } ?> >Πλήρως εργαζόμενο</option>
-							</select></td>
-						</tr>
-						<tr>
 							<td>Απαιτήσεις γνώσεων</td><td> <textarea name="requirements" cols="40" rows="3" ><?php echo $requirements; ?></textarea></td>
 						</tr>
 						<tr>
@@ -114,9 +104,6 @@
 						</tr>
 						<tr>
 						<td>Απαιτούμενες ώρες υλοποίησης</td><td> <input type="text" name="hours" value="<?php echo $hours; ?>"/></td>
-						</tr>
-						<tr>
-						<td>Στο χώρο του πανεπιστημίου</td><td> <input type="checkbox" name="at_di" <?php if($at_di==true) echo "checked='true'"; ?>  /></td>
 						</tr>
 						<tr>
 						<td>Χειμερινού εξαμήνου</td><td> <input type="checkbox" name="winter" <?php if($winter_semester==true) echo "checked='true'"; ?> /></td>
