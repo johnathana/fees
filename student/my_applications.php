@@ -80,8 +80,7 @@
 						confirm_query($result_set1);
 						if(mysql_num_rows($result_set1)>0)//iparxei idi kataxwrimeni afti i aitisi
 						{
-							echo "Είναι ήδη καταχωρημένη η συγκεκριμένη αίτησή σας!";
-							//exit();
+							echo "<p><font color='red'>Είναι ήδη καταχωρημένη η συγκεκριμένη αίτησή σας!</font></p>";
 						}
 						else
 						{
@@ -111,8 +110,8 @@
 				<thead>
 					<tr>
 						<th>ID παροχής</th>
-						<th>Τίτλος παροχής</th>
 						<th>Καθηγητής</th>
+						<th>Τίτλος παροχής</th>
 						<th>Αριθμός υποψηφίων</th>
 						<th>Απαιτήσεις γνώσεων</th>
 						<th>Παραδοτέα </th>
@@ -139,7 +138,7 @@
 								/*Βρίσκουμε τις τιμές που θέλουμε μέσω των ξένων κλειδιών*/
 								//$row2 = get_surname_from_professor_id($professor_id);
 								$ayear_row = get_ayear_from_academic_year_id($academic_year_id);
-								echo "<td>$id</td><td>$title</td><td>$professor_name</td><td>$candidates</td><td>$requirements</td><td>$deliverables</td><td>$hours</td><td>$deadline</td><td>$ayear_row[ayear]</td>";
+								echo "<td>$id</td><td>$professor_name</td><td>$title</td><td>$candidates</td><td>$requirements</td><td>$deliverables</td><td>$hours</td><td>$deadline</td><td>$ayear_row[ayear]</td>";
 								echo "<td><input type='checkbox' disabled='true' " . (($winter_semester == 1) ? "checked='true'" : "checked='false'") . ">";
 								echo "</td></tr>\n";
 							}

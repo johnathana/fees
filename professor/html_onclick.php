@@ -6,12 +6,12 @@
 	if(isset($_POST['id']))
 	{
 		$workapp_id = $_POST['id'];
-		$query = "SELECT user_id FROM work_applications WHERE id = '$workapp_id'";
+		$query = "SELECT student_email FROM work_applications WHERE id = '$workapp_id'";
 		$res = mysql_query($query,$con);
 		confirm_query($res);
 		$row = mysql_fetch_assoc($res);
-		$user_id = $row['user_id'];
-		$query1 = "SELECT work_id FROM work_applications WHERE user_id = '$user_id' AND accepted = true";
+		$student_email = $row['student_email'];
+		$query1 = "SELECT work_id FROM work_applications WHERE student_email = '$student_email' AND accepted = true";
 		$res1 = mysql_query($query1,$con);
 		confirm_query($res1);
 		$responseData = array();

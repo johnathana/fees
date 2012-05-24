@@ -194,8 +194,8 @@
 				<thead>
 					<tr>
 						<th>ID παροχής</th>
-						<th>Τίτλος παροχής</th>
 						<th>Καθηγητής</th>
+						<th>Τίτλος παροχής</th>
 						<th>Αριθμός υποψηφίων</th>
 						<th>Απαιτήσεις γνώσεων</th>
 						<th>Παραδοτέα </th>
@@ -210,10 +210,8 @@
 						{
 							extract($row);
 							echo "<tr>\n";
-
-							/*Βρίσκουμε τις τιμές που θέλουμε μέσω των ξένων κλειδιών*/
 							$ayear_row = get_ayear_from_academic_year_id($academic_year_id);
-							echo "<td>$id</td><td>$title</td><td>$professor_name</td><td>$candidates</td><td>$requirements</td><td>$deliverables</td><td>$hours</td><td>$deadline</td><td>$ayear_row[ayear]</td>";
+							echo "<td>$id</td><td>$professor_name</td><td>$title</td><td>$candidates</td><td>$requirements</td><td>$deliverables</td><td>$hours</td><td>$deadline</td><td>$ayear_row[ayear]</td>";
 							echo "<td><input type='checkbox' disabled='true' " . (($winter_semester == 1) ? "checked='true'" : "checked='false'") . ">";
 							echo "</td></tr>\n";
 						}			

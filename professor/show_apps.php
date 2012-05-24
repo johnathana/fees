@@ -32,11 +32,7 @@
         /* Applied */null,
         /* Accepted */null,
         /* Name */null,
-        /* Surname */null,
-		/* A.M. */null,
         /* Email */null,
-        /* CV */null,
-		/* Phone */null,
         ]
 		});
 		
@@ -251,12 +247,8 @@
 								<th>ID αίτησης</th>
 								<th>Ημερ/νια αίτησης</th>
 								<th>Του/Της έχει ανατεθεί</th>
-								<th>Όνομα</th>
-								<th>Επίθετο</th>
-								<th>Αριθμός μητρώου</th>
-								<th>Email</th>
-								<th>Βιογραφικό</th>
-								<th>Τηλέφωνο</th>
+								<th>Όνομα φοιτητή</th>
+								<th>Email φοιτητή</th>								
 							</tr>
 						</thead>
 						<tbody>	
@@ -264,13 +256,12 @@
 					while($row = mysql_fetch_assoc($workapps))
 					{
 						extract($row);
-						$info = get_user_info($user_id);
 						if($accepted == 1)
 							$accepted = "ΝΑΙ";
 						else
 							$accepted = "ΟΧΙ";
 						echo "<tr>";	
-						echo "<td>$id</td><td>$applied</td><td>$accepted</td><td>$info[name]</td><td>$info[surname]</td><td>$info[reg_numb]</td><td>$info[email]</td><td>$info[cv]</td><td>$info[phone]</td>";
+						echo "<td>$id</td><td>$applied</td><td>$accepted</td><td>$student_name</td><td>$student_email</td>";
 						echo "</tr>";
 					}
 					?>
@@ -326,16 +317,11 @@
 						{	
 							echo "Επιτυχής καταχώρηση στη βάση δεδομένων"."<br />";
 							//diadikasia apostolis email
-							$query5 = "SELECT user_id FROM work_applications WHERE id='$workapp_id'";
+							$query5 = "SELECT student_email FROM work_applications WHERE id='$workapp_id'";
 							$result_set5 = mysql_query($query5,$con);
 							confirm_query($result_set5);
-							$row5 = mysql_fetch_assoc($result_set5);
-							$user_id = $row5['user_id'];
-							$query4 = "SELECT email FROM users WHERE id='$user_id'";
-							$result_set4 = mysql_query($query4,$con);
-							confirm_query($result_set4);
-							$row4 = mysql_fetch_assoc($result_set4);
-							$to = $row4['email'];
+							$work_app_row = mysql_fetch_assoc($result_set5);
+							$to = $work_app_row['student_email'];
 							$subject = "Application accepted";
 							$message = "Η αίτησή σας για την παροχή ".$row1['title']." έγινε αποδεκτή.";
 							workoffer_mail($to, $subject, $message);
@@ -363,12 +349,8 @@
 									<th>ID αίτησης</th>
 									<th>Ημερ/νια αίτησης</th>
 									<th>Του/Της έχει ανατεθεί</th>
-									<th>Όνομα</th>
-									<th>Επίθετο</th>
-									<th>Αριθμός μητρώου</th>
-									<th>Email</th>
-									<th>Βιογραφικό</th>
-									<th>Τηλέφωνο</th>
+									<th>Όνομα φοιτητή</th>
+									<th>Email φοιτητή</th>
 								</tr>
 							</thead>
 							<tbody>	
@@ -376,13 +358,12 @@
 						while($row = mysql_fetch_assoc($workapps))
 						{
 							extract($row);
-							$info = get_user_info($user_id);
 							if($accepted == 1)
 								$accepted = "ΝΑΙ";
 							else
 								$accepted = "ΟΧΙ";
 							echo "<tr>";	
-							echo "<td>$id</td><td>$applied</td><td>$accepted</td><td>$info[name]</td><td>$info[surname]</td><td>$info[reg_numb]</td><td>$info[email]</td><td>$info[cv]</td><td>$info[phone]</td>";
+							echo "<td>$id</td><td>$applied</td><td>$accepted</td><td>$student_name</td><td>$student_email</td>";
 							echo "</tr>";
 						}
 						?>

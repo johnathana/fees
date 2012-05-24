@@ -26,6 +26,7 @@
 	}
 	if ( is_numeric($_GET['id']) ) {
 	$auth->work_id = $_GET['id'];
+	echo $auth->work_id;
 	}
 	$query = "SELECT * FROM work_offers WHERE id='".$_GET['id']."'";
 	$result_set = mysql_query($query,$con);
