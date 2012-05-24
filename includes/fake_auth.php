@@ -25,7 +25,7 @@ class auth {
 			   'edupersonaffiliation' => 'professor',
 			   'edupersonorgunitdn' => 'ou=inftel,ou=schools,dc=uoa,dc=gr');
 
-		$this->role = self::Admin;
+		$this->role = self::Secretariat;
 		$this->mail = "mop09261@di.uoa.gr";
 	} 
 }
