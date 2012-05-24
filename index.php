@@ -7,7 +7,7 @@
 	switch ($auth->role) {
 
 	case auth::Admin :
-		$location = "/admin/admin_menu.php";
+		$location = "/admin/admin_form.php";
 		break;
 	case auth::Professor :
 		$location = "/professor/prof_menu.php";

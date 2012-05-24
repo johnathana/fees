@@ -111,7 +111,7 @@
 				<div id="demo" ></div>
 				
 				<?php
-					$query = "SELECT * FROM work_offers WHERE is_available=true AND has_expired=false";//fere tis diathesimes paroxes
+					$query = "SELECT * FROM work_offers WHERE published=true AND is_available=true AND has_expired=false";//fere tis diathesimes paroxes
 					$result_set = mysql_query($query,$con);
 					confirm_query($result_set);
 				?>
