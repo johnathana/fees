@@ -15,49 +15,48 @@
 	require_once($_SERVER['DOCUMENT_ROOT'].'/includes/functions.php');
 
 
-	if ( is_null($_GET['id']) )
-	{
-		die("Δεν έχει επιλεγεί παροχή");
-	}
+	session_start();
 
-	if ( is_int($_GET['id']) )
-	{
-		die();
+
+	if ( isset($_GET['id']) ) {
+
+		$workoffer_id = intval($_GET['id']);
+		$_SESSION['workoffer_id'] = $workoffer_id;
+
+		$query = "SELECT * FROM work_offers WHERE id='".$workoffer_id."'";
+		$result_set = mysql_query($query, $con);
+		confirm_query($result_set);
+		$row = mysql_fetch_assoc($result_set);
+		extract($row);
+		$query1 = "SELECT * FROM faculty WHERE id='$faculty_id'";
+		$result_set1 = mysql_query($query1,$con);
+		confirm_query($result_set1);
+		$faculty_row = mysql_fetch_assoc($result_set1);
+		$query2 = "SELECT * FROM workoffer_categories WHERE id='$category_id'";
+		$result_set2 = mysql_query($query2,$con);
+		confirm_query($result_set2);
+		$category_row = mysql_fetch_assoc($result_set2);
+		$query3 = "SELECT * FROM workoffer_categories";
+		$resultset3 = mysql_query($query3,$con);
+		confirm_query($resultset3);
+		$categoryarray = array();
+		while ($row3 = mysql_fetch_array($resultset3))
+		{	
+			array_push($categoryarray, array ('value' => $row3["id"], 'label' => $row3["category"]));  
+		}
+		$query4 = "SELECT * FROM faculty";
+		$resultset4 = mysql_query($query4,$con);
+		confirm_query($resultset4);
+		$facultyarray = array();
+		while ($row4 = mysql_fetch_array($resultset4))
+		{	
+			array_push($facultyarray, array ('value' => $row4["id"], 'label' => $row4["title"]));  
+		}
+
+	} else {
+		// Save mode
+		// Please don't die() !!!
 	}
-	if ( is_numeric($_GET['id']) ) {
-	$auth->work_id = $_GET['id'];
-	echo $auth->work_id;
-	}
-	$query = "SELECT * FROM work_offers WHERE id='".$_GET['id']."'";
-	$result_set = mysql_query($query,$con);
-	confirm_query($result_set);
-	$row = mysql_fetch_assoc($result_set);
-	extract($row);
-	$query1 = "SELECT * FROM faculty WHERE id='$faculty_id'";
-	$result_set1 = mysql_query($query1,$con);
-	confirm_query($result_set1);
-	$faculty_row = mysql_fetch_assoc($result_set1);
-	$query2 = "SELECT * FROM workoffer_categories WHERE id='$category_id'";
-	$result_set2 = mysql_query($query2,$con);
-	confirm_query($result_set2);
-	$category_row = mysql_fetch_assoc($result_set2);
-	$query3 = "SELECT * FROM workoffer_categories";
-	$resultset3 = mysql_query($query3,$con);
-	confirm_query($resultset3);
-	$categoryarray = array();
-	while ($row3 = mysql_fetch_array($resultset3))
-	{	
-		array_push($categoryarray, array ('value' => $row3["id"], 'label' => $row3["category"]));  
-	}
-	$query4 = "SELECT * FROM faculty";
-	$resultset4 = mysql_query($query4,$con);
-	confirm_query($resultset4);
-	$facultyarray = array();
-	while ($row4 = mysql_fetch_array($resultset4))
-	{	
-		array_push($facultyarray, array ('value' => $row4["id"], 'label' => $row4["title"]));  
-	}
-	
 ?>
 
 	<script type="text/javascript">
@@ -179,8 +178,8 @@ function onSubmit($formValues) {
 
 	global $con;
 	global $auth;
-	return array('failureHtml' => '<h2>Η παροχή δεν καταχωρήθηκε</h2>');
-	$id = $auth->work_id;
+
+
 	$title = trim(mysql_real_escape_string($formValues->registrationPage->registrationSection1->title));
 	$candidates = trim(mysql_real_escape_string($formValues->registrationPage->registrationSection1->candidates));
 	$category_id = trim(mysql_real_escape_string($formValues->registrationPage->registrationSection1->category));
@@ -188,18 +187,18 @@ function onSubmit($formValues) {
 	$requirements = trim(mysql_real_escape_string($formValues->registrationPage->registrationSection1->requirements));
 	$deliverables = trim(mysql_real_escape_string($formValues->registrationPage->registrationSection1->deliverables));
 	$hours = trim(mysql_real_escape_string($formValues->registrationPage->registrationSection1->hours));
-	$winter_semester = trim(mysql_real_escape_string($formValues->registrationPage->registrationSection1->winter_semester[0]));
-	$is_available = trim(mysql_real_escape_string($formValues->registrationPage->registrationSection1->is_available[0]));
+	$winter_semester = (trim(mysql_real_escape_string($formValues->registrationPage->registrationSection1->winter_semester[0])) == 1) ? 1 : 0;
+	$is_available = (trim(mysql_real_escape_string($formValues->registrationPage->registrationSection1->is_available[0])) == 1) ? 1 : 0; 
 	$deadline = trim(mysql_real_escape_string($formValues->registrationPage->registrationSection1->deadline));
 
-	$query = "UPDATE work_offers SET title = '$title',category_id = '$category_id', faculty_id = '$faculty_id', candidates = '$candidates',  requirements = '$requirements', deliverables = '$deliverables', hours = '$hours', deadline = '$deadline', winter_semester = '$winter_semester', is_available = '$is_available' WHERE id='$id'";
+	$query = "UPDATE work_offers SET title = '$title',category_id = '$category_id', faculty_id = '$faculty_id', candidates = '$candidates',  requirements = '$requirements', deliverables = '$deliverables', hours = '$hours', deadline = '$deadline', winter_semester = '$winter_semester', is_available = '$is_available' WHERE id='".$_SESSION['workoffer_id']."'";
+	return array('failureHtml' => $query);
 
-
-	$result_set = mysql_query($query,$con);
+	$result_set = mysql_query($query, $con);
 	confirm_query($result_set);
 
 	return array(
-		'successPageHtml' => '<script type="text/javascript">window.location.href="/index.php";</script>'
+		'successPageHtml' => '<script type="text/javascript">window.location.href="/professor/personal_workoffer_list.php";</script>'
 	);
 }
 
