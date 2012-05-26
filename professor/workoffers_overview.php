@@ -212,7 +212,7 @@
 							echo "<tr>\n";
 							$ayear_row = get_ayear_from_academic_year_id($academic_year_id);
 							echo "<td>$id</td><td>$professor_name</td><td>$title</td><td>$candidates</td><td>$requirements</td><td>$deliverables</td><td>$hours</td><td>$deadline</td><td>$ayear_row[ayear]</td>";
-							echo "<td><input type='checkbox' disabled='true' " . (($winter_semester == 1) ? "checked='true'" : "checked='false'") . ">";
+							echo "<td><input type='checkbox' disabled='true' " . (($winter_semester == 1) ? "checked='true'" : "") . ">";
 							echo "</td></tr>\n";
 						}			
 				?>	

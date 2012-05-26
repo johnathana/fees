@@ -28,6 +28,26 @@
 		confirm_query($result_set);
 		$row = mysql_fetch_assoc($result_set);
 		extract($row);
+		
+		$query2 = "SELECT * FROM work_applications WHERE work_id = '".$workoffer_id."' AND accepted = '1'";
+		$workapps = mysql_query($query2,$con);
+		confirm_query($workapps);
+		$q = "SELECT is_available FROM work_offers WHERE id = '".$workoffer_id."'";
+		$result = mysql_query($q,$con);
+		confirm_query($result);
+		$row = mysql_fetch_assoc($result);
+		if (mysql_num_rows($workapps) >= 1)
+		{
+			$chkbx_off = "anenergo";
+		}
+		if (mysql_num_rows($workapps) == 0 && $row['is_available'] == 0)//monadiki periptwsi na einai checked to pedio apenergopoiisi paroxis
+		{
+			$chkbx_off = "tsekarismeno";
+		}
+		if (mysql_num_rows($workapps) == 0 && $row['is_available'] != 0)
+		{
+			$chkbx_off = "mh_tsekarismeno";
+		}
 		$query1 = "SELECT * FROM faculty WHERE id='$faculty_id'";
 		$result_set1 = mysql_query($query1,$con);
 		confirm_query($result_set1);
@@ -69,10 +89,14 @@
 			$("#deliverables").val("<?php echo $deliverables; ?>");
 			$("#hours").val("<?php echo $hours; ?>");
 			$('input[name=winter_semester]').attr('checked', '<? echo $winter_semester; ?>');
-			$('input[name=is_available]').attr('checked', '<? echo $is_available; ?>');
+			<? if($chkbx_off == "tsekarismeno"){ ?>$('input[name=non_available]').attr('checked', 'true');<?}else if ($chkbx_off == "anenergo"){  ?>$('input[name=non_available]').attr('disabled', true);<? }else if($chkbx_off == "mh_tsekarismeno"){ ?> <? }?>
 
 			$("#deadline").datepicker({ dateFormat: 'yy-mm-dd' });
 			$("#deadline").val("<?php echo $deadline; ?>");
+		});
+		$('input[name=menu]').click(function()
+		{
+			window.location.href="/professor/prof_menu.php";
 		});
 	</script>
 
@@ -156,7 +180,7 @@ $jFormSection1->addJFormComponentArray(array(
             array(
                 array('value' => '1', 'label' => 'Χειμερινού εξαμήνου'),
     )),
-	new JFormComponentMultipleChoice('is_available', '',
+	new JFormComponentMultipleChoice('non_available', '',
             array(
                 array('value' => '1', 'label' => 'Απενεργοποίηση παροχής'),
     )),
@@ -188,11 +212,11 @@ function onSubmit($formValues) {
 	$deliverables = trim(mysql_real_escape_string($formValues->registrationPage->registrationSection1->deliverables));
 	$hours = trim(mysql_real_escape_string($formValues->registrationPage->registrationSection1->hours));
 	$winter_semester = (trim(mysql_real_escape_string($formValues->registrationPage->registrationSection1->winter_semester[0])) == 1) ? 1 : 0;
-	$is_available = (trim(mysql_real_escape_string($formValues->registrationPage->registrationSection1->is_available[0])) == 1) ? 1 : 0; 
+	$is_available = (trim(mysql_real_escape_string($formValues->registrationPage->registrationSection1->non_available[0])) == 1) ? 0 : 1; 
 	$deadline = trim(mysql_real_escape_string($formValues->registrationPage->registrationSection1->deadline));
 
 	$query = "UPDATE work_offers SET title = '$title',category_id = '$category_id', faculty_id = '$faculty_id', candidates = '$candidates',  requirements = '$requirements', deliverables = '$deliverables', hours = '$hours', deadline = '$deadline', winter_semester = '$winter_semester', is_available = '$is_available' WHERE id='".$_SESSION['workoffer_id']."'";
-	return array('failureHtml' => $query);
+	//return array('failureHtml' => $query);
 
 	$result_set = mysql_query($query, $con);
 	confirm_query($result_set);
@@ -207,7 +231,9 @@ $registration->processRequest();
 
 ?>
 	<div style="margin: 15px">
-		<a href="/">Πίσω</a>
+	<p>
+		<input type="button" id="prof" name="menu" value="Αρχικό μενού" class="button"/>
+	</p>
 	</div>
 
 	</aside> 
