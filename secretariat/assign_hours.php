@@ -33,12 +33,13 @@
 		//"sScrollXInner": "850px",
 		"bScrollCollapse": true,
 		"aoColumns": [
-        /* WorkAppId */{"bVisible": false },
-        /* Applied */null,
-        /* Name */null,
-        /* Email */null,
-		/* Professor name */null,
+	        /* WorkAppId */{"bVisible": false },
+	        /* Applied */null,
+       		/* Name */null,
+	        /* Email */null,
+	-	/* Professor name */null,
 		/* Title */null,
+		/* Hours */null,
 		/* Acad_year */null,
 		/* Winter */null,
         ]
@@ -141,9 +142,9 @@
 						<th>Email φοιτητή</th>
 						<th>Καθηγητής</th>
 						<th>Τίτλος παροχής</th>
+						<th>Ώρες παροχής</th>
 						<th>Ακαδημαϊκό έτος</th>
 						<th>Χειμερινού εξαμήνου</th>
-					</tr>
 				</thead>
 				<tbody>	
 				<?php	while($row = mysql_fetch_assoc($result_set))
@@ -156,7 +157,7 @@
 							$academic_year_id = $workoffer_row['academic_year_id'];
 							$ayear_row = get_ayear_from_academic_year_id($academic_year_id);
 							echo "<tr>";
-							echo "<td>$row[id]</td><td>$row[applied]</td><td>$row[student_name]</td><td>$row[student_email]</td><td>$workoffer_row[professor_name]</td><td>$workoffer_row[title]</td><td>$ayear_row[ayear]</td>";
+							echo "<td>$row[id]</td><td>$row[applied]</td><td>$row[student_name]</td><td>$row[student_email]</td><td>$workoffer_row[professor_name]</td><td>$workoffer_row[title]</td><td>$workoffer_row[hours]</td><td>$ayear_row[ayear]</td>";
 							echo "<td><input type='checkbox' disabled='true' " . (($workoffer_row['$winter_semester'] == 1) ? "checked='true'" : "") . ">";
 							echo "</td></tr>";
 						}
@@ -167,7 +168,7 @@
 				<br />
 				<table>
 				<tr>
-				<td>Αναγνωρισμένες ώρες</td><td> <input type="text" name="hours" size="10"/></td>
+				<td>Αναγνωρισμένες ώρες: </td><td> <input type="text" name="hours" size="10"/></td>
 				</tr>
 				</table>
 				<br />

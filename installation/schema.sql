@@ -75,7 +75,7 @@ create table if not exists work_applications (
     work_id int unsigned not null,
     applied timestamp default now(),
     accepted boolean default false,
-	hours_accepted smallint unsigned default '0',
+    hours_accepted smallint unsigned default '0',
     foreign key (work_id) references work_offers(id)
 ) character set 'utf8' collate 'utf8_general_ci';
 
