@@ -228,7 +228,7 @@
 			<p>Επιλέξτε μια παροχή και στη συνέχεια πατήστε επεξεργασία για τροποποίηση της συγκεκριμένης παροχής ή επιλέξτε αιτήσεις για να δείτε τις αιτήσεις των φοιτητών</p>
 			<form id="myForm"  method="POST" >
 				<div id="demo" ></div>
-				<div class="demo_jui" id="demo_jui">
+				<div class="demo_jui" id="demo_jui"></div>
 				
 				<?php   
 				if (isset($_GET['check']) && $_GET['check'] == "notlive"){  ?>
@@ -303,7 +303,6 @@
 					<input class="button" type="button" id="edit_btn" onClick="check_redirect1();" value="Επεξεργασία"  />
 					<input class="button" type="button" id="apps_btn" onClick="check_redirect2();" value="Αιτήσεις για αυτήν την παροχή"  />
 				</p>
-				</div>
 			</form>	
 				
 			<div class="spacer"></div>
