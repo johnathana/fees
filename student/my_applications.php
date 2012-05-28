@@ -124,7 +124,6 @@
 				<tbody>	
 				<?php	while($row = mysql_fetch_assoc($result_set))
 						{
-							extract($row);
 							$workoffer_id = $row['work_id'];
 							$acceptance = $row['accepted'];
 							$query1 = "SELECT * FROM work_offers WHERE id='$workoffer_id'";
@@ -133,7 +132,7 @@
 							while($row1 = mysql_fetch_assoc($result_set1))
 							{
 								extract($row1);
-								echo "<tr".(($acceptance==1) ? "<class = 'high'>" : ">");
+								echo "<tr".(($acceptance==1) ? " class = 'high'>" : ">");
 								
 								/*Βρίσκουμε τις τιμές που θέλουμε μέσω των ξένων κλειδιών*/
 								//$row2 = get_surname_from_professor_id($professor_id);

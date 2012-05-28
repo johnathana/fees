@@ -14,6 +14,8 @@
 	require_once($_SERVER['DOCUMENT_ROOT'].'/includes/auth.php');
 	require_once($_SERVER['DOCUMENT_ROOT'].'/includes/functions.php');
 	
+	session_start();
+	
 	global $auth;
 	
 ?>
@@ -177,11 +179,10 @@ $registration->processRequest();
 
 ?>
 
-	
 	<div style="margin: 0px 0px 5px 10px">
 		<input type="button" name="menu" value="Ακύρωση" class="button" onClick="window.location.href='/index.php'"/> 	
 	</div>
-
+	
 
 	</aside> 
 	</div><!--/content--> 
