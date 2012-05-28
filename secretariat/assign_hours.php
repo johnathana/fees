@@ -9,7 +9,7 @@
 		require_once($_SERVER['DOCUMENT_ROOT'].'/secretariat/form.libs.php');
 
 
-		if(isset($_POST['id']) && isset($_POST['hours']))
+		if(isset($_POST['id']) && is_numeric(($_POST['id'])) && isset($_POST['hours']) && is_numeric(($_POST['hours'])))
 		{
 			$workapp_id = $_POST['id'];
 			$hours = $_POST['hours'];
@@ -75,13 +75,14 @@
 			var workapp_id = (fnGetSelected(oTable));
 			var str = '<input type="hidden" name="id" value="'+workapp_id+'"/>';
 			$('#demo').html(str);
+			$('#hours').val((fnGetSelectedHours(oTable)));
 		});
 		
 		$('input[name=menu]').click(function()
 		{
 			window.location.href="/secretariat/secretariat_menu.php";
 		}); 
-		
+
 		$('#myForm').submit(function()
 		{
 			var workapp_id = (fnGetSelected(oTable));
@@ -116,10 +117,29 @@
 					//aReturn.push( aTrs[i] );
 				}
 			}
-			//return aReturn;
+
 			return null;
 		}
-		
+
+		/* Get hours from which are currently selected row */
+		function fnGetSelectedHours( oTableLocal )
+		{
+			var aReturn = new Array();
+			var aTrs = oTableLocal.fnGetNodes();
+			
+			for ( var i=0 ; i<aTrs.length ; i++ )
+			{
+				if ( $(aTrs[i]).hasClass('row_selected') )
+				{
+					var aRowData = new Array();
+					aRowData = oTable.fnGetData(aTrs[i]);
+
+					return aRowData[9];
+				}
+			}
+
+			return null;
+		}
 		</script>
 </head> 
 
@@ -138,7 +158,7 @@
 				<h2>Πίνακας Αιτήσεων Παροχών Έργου</h2> 
 			</div>
 			
-			<form name="myForm" action="assign_hours.php" method="POST">
+			<form id="myForm" name="myForm" action="assign_hours.php" method="POST">
 				<div id="demo" ></div>
 				<div class="demo_jui" id="demo_jui"></div>
 				<?php
@@ -183,7 +203,7 @@
 				<br />
 				<table>
 				<tr>
-				<td>Αναγνωρισμένες ώρες: </td><td> <input type="text" name="hours" size="10"/></td>
+				<td>Αναγνωρισμένες ώρες: </td><td> <input type="text" id="hours" name="hours" size="10"/></td>
 				</tr>
 				</table>
 				<br />
