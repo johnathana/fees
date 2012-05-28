@@ -4,7 +4,8 @@
 	<?php 
 		require_once($_SERVER['DOCUMENT_ROOT'].'/includes/head.php'); 
 		require_once($_SERVER['DOCUMENT_ROOT'].'/includes/auth.php');
-		require_once($_SERVER['DOCUMENT_ROOT'].'/includes/functions.php'); 
+		require_once($_SERVER['DOCUMENT_ROOT'].'/includes/functions.php');
+		require_once($_SERVER['DOCUMENT_ROOT'].'/secretariat/form.libs.php');		
 	 ?>
 	<style type="text/css" title="currentStyle">
 		@import "../dataTables/css/demo_page.css";
@@ -15,6 +16,7 @@
 	<script type="text/javascript" language="javascript" src="../dataTables/js/jquery.dataTables.js"></script>
 	<script type="text/javascript" language="javascript" src="../media/js/ZeroClipboard.js"></script>
 	<script type="text/javascript" language="javascript" src="../media/js/TableTools.min.js"></script>
+	<script type="text/javascript" src="../jquery-validation-1.8.0/jquery.validate.min.js"></script>
 		
 		<script type="text/javascript" charset="utf-8">
 		var oTable;
@@ -31,15 +33,9 @@
 		//"sScrollXInner": "850px",
 		"bScrollCollapse": true,
 		"aoColumns": [
-        /* WorkAppId */{"bVisible": false },
-        /* Applied */null,
-        /* Name */null,
-        /* Email */null,
-		/* Professor name */null,
-		/* Title */null,
-		/* Acad_year */null,
-		/* Winter */null,
-        ]
+			/* Name */null,
+			/* Email */null,
+			/* Hours */null        ]
 		});
 		
 		var oTableTools = new TableTools( oTable, {
@@ -75,7 +71,7 @@
 			}
 			else//δεν έχει επιλέξει κάποιο φοιτητή
 			{
-				alert("Πρέπει πρώτα να επιλέξετε έναν φοιτητή για την ανάθεση");
+				alert("Πρέπει πρώτα να επιλέξετε μια αίτηση για την ανάθεση ωρών");
 				return false;
 			}
 		});
@@ -118,44 +114,42 @@
 		
 		<div id="container">
 			<div class="full_width big">
-				<h2>Πίνακας Αναγνωρισμένων Ωρών Παροχών Έργου</h2> 
+				<h2>Πίνακας Αναγνωρισμένων Ωρών Παροχής Έργου</h2>
 			</div>
 			
-			<form name="myForm" action="view_hours.php" method="POST">
 				<div id="demo" ></div>
 				<div class="demo_jui" id="demo_jui"></div>
 				<?php
-					if(isset($_POST['id']) && isset($_POST['hours']))
-					{
-						$workapp_id = $_POST['id'];
-						$hours = $_POST['hours'];
-						$query = "UPDATE work_applications SET hours_accepted = '$hours' WHERE id='$workapp_id'";
-						$result_set = mysql_query($query,$con);
-						confirm_query($result_set);
-						$query1 = "SELECT student_email FROM work_applications group by student_email";
-						$result_set1 = mysql_query($query1,$con);
-						confirm_query($result_set1);
-						
-						while($row = mysql_fetch_assoc($result_set1))
-						{
-							print_r($row['student_email']);
-							echo "<br />";
-						}
-						
-					}
-					else
-					{
-						//please don't die
-					}
-					
+					$query = "select student_name, student_email, sum(hours_accepted) as hours from work_applications group by student_email; ";
+					$result_set = mysql_query($query,$con);
+					confirm_query($result_set);
 				?>
 				
-				
-				
-				<br />
-				<p>
-				<input type="button" name="menu" value="Αρχικό μενού" class="button"/>	</p>
-			</form>	
+				<table cellpadding="0" cellspacing="0" border="0" class="display" id="example" >
+				<thead>
+					<tr>
+						<th>Όνομα φοιτητή</th>
+						<th>Email φοιτητή</th>
+						<th>Αναγνωρισμένες ώρες</th>
+				</thead>
+				<tbody>
+				<?php
+					while($row = mysql_fetch_assoc($result_set))
+					{
+						echo "<tr>";
+						echo "<td>$row[student_name]</td><td>$row[student_email]</td><td>$row[hours]</td>";
+						echo "</tr>";
+					}
+
+				?>
+				</tbody>
+				</table>
+				<table>
+
+				</table>
+				<br/>
+
+				<p><input type="button" name="menu" value="Αρχικό μενού" class="button"/></p>
 			<div class="spacer"></div>
 		</div>
 	</aside> 

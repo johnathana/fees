@@ -1,12 +1,24 @@
 <!DOCTYPE html> 
+
 <html> 
 <head>
 	<?php 
 		require_once($_SERVER['DOCUMENT_ROOT'].'/includes/head.php'); 
 		require_once($_SERVER['DOCUMENT_ROOT'].'/includes/auth.php');
 		require_once($_SERVER['DOCUMENT_ROOT'].'/includes/functions.php');
-		require_once($_SERVER['DOCUMENT_ROOT'].'/secretariat/form.libs.php');		
+		require_once($_SERVER['DOCUMENT_ROOT'].'/secretariat/form.libs.php');
+
+
+		if(isset($_POST['id']) && isset($_POST['hours']))
+		{
+			$workapp_id = $_POST['id'];
+			$hours = $_POST['hours'];
+			$query = "UPDATE work_applications SET hours_accepted = '$hours' WHERE id='$workapp_id'";
+			$result_set = mysql_query($query,$con);
+			confirm_query($result_set);
+		}
 	 ?>
+
 	<style type="text/css" title="currentStyle">
 		@import "../dataTables/css/demo_page.css";
 		@import "../dataTables/css/demo_table_jui.css";
@@ -23,9 +35,10 @@
 		
 		$(document).ready(function(){ 
 		$('#myForm').validate({	
-								'rules':
-									{'hours':'required'}
-							  });
+				'rules':
+				{'hours':'required'}
+		 });
+
 		/* Init the table */
 		oTable = $('#example').dataTable({
 		"bJQueryUI": true,
@@ -42,6 +55,7 @@
 		/* Hours */null,
 		/* Acad_year */null,
 		/* Winter */null,
+		/* Hours */null,
         ]
 		});
 		
@@ -124,7 +138,7 @@
 				<h2>Πίνακας Αιτήσεων Παροχών Έργου</h2> 
 			</div>
 			
-			<form name="myForm" action="view_hours.php" method="POST">
+			<form name="myForm" action="assign_hours.php" method="POST">
 				<div id="demo" ></div>
 				<div class="demo_jui" id="demo_jui"></div>
 				<?php
@@ -145,6 +159,7 @@
 						<th>Ώρες παροχής</th>
 						<th>Ακαδημαϊκό έτος</th>
 						<th>Χειμερινού εξαμήνου</th>
+						<th>Αναγνωρισμένες ώρες</th>
 				</thead>
 				<tbody>	
 				<?php	while($row = mysql_fetch_assoc($result_set))
@@ -158,8 +173,8 @@
 							$ayear_row = get_ayear_from_academic_year_id($academic_year_id);
 							echo "<tr>";
 							echo "<td>$row[id]</td><td>$row[applied]</td><td>$row[student_name]</td><td>$row[student_email]</td><td>$workoffer_row[professor_name]</td><td>$workoffer_row[title]</td><td>$workoffer_row[hours]</td><td>$ayear_row[ayear]</td>";
-							echo "<td><input type='checkbox' disabled='true' " . (($workoffer_row['$winter_semester'] == 1) ? "checked='true'" : "") . ">";
-							echo "</td></tr>";
+							echo "<td><input type='checkbox' disabled='true' " . (($workoffer_row['$winter_semester'] == 1) ? "checked='true'" : "") . "></td><td>$row[hours_accepted]</td>";
+							echo "</tr>";
 						}
 					
 				?>	

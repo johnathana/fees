@@ -79,7 +79,7 @@ create table if not exists work_applications (
     foreign key (work_id) references work_offers(id)
 ) character set 'utf8' collate 'utf8_general_ci';
 
--- select sum(hours_accepted) from work_applications where student_email = "" groub by student_email;
+
 
 create event update_expired
     on schedule every 1 day
