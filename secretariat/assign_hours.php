@@ -193,7 +193,7 @@
 							$ayear_row = get_ayear_from_academic_year_id($academic_year_id);
 							echo "<tr>";
 							echo "<td>$row[id]</td><td>$row[applied]</td><td>$row[student_name]</td><td>$row[student_email]</td><td>$workoffer_row[professor_name]</td><td>$workoffer_row[title]</td><td>$workoffer_row[hours]</td><td>$ayear_row[ayear]</td>";
-							echo "<td><input type='checkbox' disabled='true' " . (($workoffer_row['$winter_semester'] == 1) ? "checked='true'" : "") . "></td><td>$row[hours_accepted]</td>";
+							echo "<td><input type='checkbox' disabled='true' " . (($workoffer_row['winter_semester'] == 1) ? "checked='true'" : "") . "></td><td>$row[hours_accepted]</td>";
 							echo "</tr>";
 						}
 					
