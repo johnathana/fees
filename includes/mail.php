@@ -1,6 +1,6 @@
 <?php
 
-function workoffer_mail($to, $subject, $message)
+function send_mail($to, $subject, $message)
 {
 	$subject = "=?utf-8?B?" . base64_encode('[ODT - Workoffer] ' . $subject) . "?=";
 

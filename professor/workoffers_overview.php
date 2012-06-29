@@ -45,18 +45,21 @@
 			"sSwfPath": "../media/swf/copy_cvs_xls_pdf.swf",
 			"aButtons": [ "copy","xls", "print" ]
         } );
-		
-		$('#demo_jui').before( oTableTools.dom.container );		
-		
+
+
+		$('#demo_jui').before( oTableTools.dom.container );
+
+
 		$('input[name=menu]').click(function()
 		{
 			window.location.href="/professor/prof_menu.php";
 		}); 
-	
+
 		}); 
+
+
 		function radio_click()
 		{
-			
 			if($('input[name=filter1]:checked').val() == "one")
 			{
 				if($('input[name=filter2]:checked').val() == "current")
@@ -108,7 +111,8 @@
 				}
 			}	 
 		}
-		
+
+
 		/* Get the rows which are currently selected */
 		function fnGetSelected( oTableLocal )
 		{
@@ -151,40 +155,31 @@
 				<div id="demo" ></div>
 				<div class="demo_jui" id="demo_jui">
 				
-				<?php   
-				if (isset($_GET['choice']))
-				{  
-					$choice = $_GET['choice'];
-					$result = get_data($choice, $auth->mail);
-				}
-				else
-				{
-					$choice = "111";//proswpikes-trexon etos-energes
-					$result = get_data($choice, $auth->mail);
-				}
+				<?php
+					if (isset($_GET['personal']) && isset($_GET['current'])) {  
+						$personal = $_GET['personal'];
+						$current = $_GET['current'];
+
+						$result = get_data($auth->mail, $personal, $current);
+					}
+					else
+						$result = get_workoffer_list($auth->mail, 0, 0);
 				?>
-				<table style="width: 300px">
+
+				<table style="width: 350px">
 				<tr>
 					<td><label>Προσωπικές παροχές</td>
-					<td><input type="radio" name="filter1" onClick="radio_click();" value="one" 
-					<?php if($choice=="111"||$choice=="112"||$choice=="121"||$choice=="122"){echo "checked=\"true\"";}?> /></label></td>
+					<td><input type="radio" name="filter1" onClick="radio_click();" value="one" <?php if ($personal) {echo "checked=\"true\"";} ?> /></label></td>
+					<td style="width: 50px"></td>
 					<td><label>Όλων των καθηγητών</td>
-					<td><input type="radio" name="filter1" onClick="radio_click();" value="all"
-					<?php if($choice=="211"||$choice=="212"||$choice=="221"||$choice=="222"){echo "checked=\"true\"";}?> /></label></td>
+					<td><input type="radio" name="filter1" onClick="radio_click();" value="all" <?php if ($personal) {echo "checked=\"false\"";}?> /></label></td>
 				</tr>
 				<tr>
-					<td><label>Τρέχοντος έτους</td>
-					<td><input type="radio" name="filter2" onClick="radio_click();" value="current"
-					<?php if($choice=="111"||$choice=="112"||$choice=="211"||$choice=="212"){echo "checked=\"true\"";}?> /></label></td>
-					<td><label>Παλιότερων ετών</td>
-					<td><input type="radio" name="filter2" onClick="radio_click();" value="old"
-					<?php if($choice=="121"||$choice=="122"||$choice=="221"||$choice=="222"){echo "checked=\"true\"";}?>/></label></td>
-				</tr>
-				<tr>
-					<td><label>Ενεργές παροχές</td>
+					<td><label>Τρέχουσες παροχές</td>
 					<td><input type="radio" name="filter3" onClick="radio_click();" value="live"
 					<?php if($choice=="111"||$choice=="121"||$choice=="211"||$choice=="221"){echo "checked=\"true\"";}?> /></label></td>
-					<td><label>Ανενεργές παροχές</td>
+					<td style="width: 50px"></td>
+					<td><label>Παλιές παροχές</td>
 					<td><input type="radio" name="filter3" onClick="radio_click();" value="dead"
 					<?php if($choice=="112"||$choice=="122"||$choice=="212"||$choice=="222"){echo "checked=\"true\"";}?>/></label></td>
 				</tr>
@@ -206,16 +201,14 @@
 					</tr>
 				</thead>
 				<tbody>	
-				<?php	while($row = mysql_fetch_assoc($result))
-						{
-							extract($row);
-							echo "<tr>\n";
-							$ayear_row = get_ayear_from_academic_year_id($academic_year_id);
-							echo "<td>$id</td><td>$professor_name</td><td>$title</td><td>$candidates</td><td>$requirements</td><td>$deliverables</td><td>$hours</td><td>$deadline</td><td>$ayear_row[ayear]</td>";
-							echo "<td><input type='checkbox' disabled='true' " . (($winter_semester == 1) ? "checked='true'" : "") . ">";
-							echo "</td></tr>\n";
-						}			
-				?>	
+				<?php
+					while($row = mysql_fetch_assoc($result)) {
+						extract($row);
+						echo "<tr>\n";
+						echo "<td>$id</td><td>$professor_name</td><td>$title</td><td>$candidates</td><td>$requirements</td><td>$deliverables</td><td>$hours</td><td>$deadline</td><td>$start_date</td>";
+						echo "</tr>\n";
+					}
+				?>
 				</tbody>
 				</table>
 				

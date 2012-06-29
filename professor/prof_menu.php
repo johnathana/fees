@@ -12,7 +12,7 @@
 	$(document).ready(function() {
 		$('input[name=create]').click(function()
 		{
-			window.location.href="/professor/create_test.php";
+			window.location.href="/professor/create_workoffer.php";
 		});
 		$('input[name=overview]').click(function()
 		{

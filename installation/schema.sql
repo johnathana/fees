@@ -4,14 +4,6 @@ create database if not exists feesdb CHARACTER SET 'utf8' COLLATE 'utf8_general_
 use feesdb;
 
 
-create table if not exists academic_year (
-    id int unsigned not null auto_increment primary key,
-    ayear varchar(10) not null,
-    is_current boolean
-) character set 'utf8' collate 'utf8_general_ci';
-
-insert into academic_year value (1, "2011-2012", true);
-
 create table if not exists faculty (
     id int unsigned not null auto_increment primary key,
     title varchar(255),
@@ -55,16 +47,14 @@ create table if not exists work_offers (
     requirements text,
     deliverables varchar(255),
     hours smallint unsigned,
+    start_date date,
+    end_date date,
     deadline date,
     faculty_id int unsigned,
-    academic_year_id int unsigned,
-    winter_semester boolean,
     is_available boolean,
-    has_expired boolean,
     published boolean,
     foreign key (category_id) references workoffer_categories(id),
-    foreign key (faculty_id) references faculty(id),
-    foreign key (academic_year_id) references academic_year(id)
+    foreign key (faculty_id) references faculty(id)
 ) character set 'utf8' collate 'utf8_general_ci';
 
 
@@ -78,12 +68,4 @@ create table if not exists work_applications (
     hours_accepted smallint unsigned default '0',
     foreign key (work_id) references work_offers(id)
 ) character set 'utf8' collate 'utf8_general_ci';
-
-
-
-create event update_expired
-    on schedule every 1 day
-      do
-update work_offers set has_expired = true where deadline < now();
-
 
