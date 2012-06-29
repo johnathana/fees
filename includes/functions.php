@@ -88,25 +88,4 @@
 		}
 	}
 
-
-	/*Βρίσκει το ακαδημαϊκό έτος μέσω του foreign key*/
-	function get_ayear_from_academic_year_id($academic_year_id)
-	{
-		global $con;
-		$query2 = "SELECT ayear FROM academic_year WHERE id='$academic_year_id'";
-		$result_set2 = mysql_query($query2,$con);
-		confirm_query($result_set2);
-		$row2 = mysql_fetch_assoc($result_set2);
-		return $row2;
-	}
-	function get_current_year()
-	{
-		global $con;
-		$query="SELECT id FROM academic_year WHERE is_current=true";
-		$result_set = mysql_query($query,$con);
-		confirm_query($result_set);
-		$year = mysql_fetch_assoc($result_set);
-		return $year;
-	}
-
 ?>
