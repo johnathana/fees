@@ -21,6 +21,8 @@
 
 		if ($current)
 			$query .= " and now() between start_date and end_date ";
+		else
+			$query .= " and end_date < now() ";
 
 
 		$result_set = mysql_query($query, $con);

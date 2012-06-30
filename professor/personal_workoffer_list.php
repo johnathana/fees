@@ -58,11 +58,8 @@
 			var str = '<input type="hidden" name="id" value="'+workid+'"/>';
 			$('#demo').html(str);
 		});
-		$('input[name=menu]').click(function()
-		{
-			window.location.href="/professor/prof_menu.php";
-		});
 		}); 
+
 		function radio_click()
 		{
 			
@@ -73,6 +70,7 @@
 			else
 				window.location.href="personal_workoffer_list.php?check=notlive"; 
 		}
+
 		function check_redirect1()
 		{
 			var workid = (fnGetSelected(oTable));

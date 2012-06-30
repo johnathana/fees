@@ -109,11 +109,12 @@
 					if (isset($_GET['personal']) && isset($_GET['current'])) {  
 						$personal = $_GET['personal'];
 						$current = $_GET['current'];
-
-						$result = get_workoffer_list($auth->mail, $personal, $current);
+					} else {
+						$personal = 1;
+                                                $current = 1;
 					}
-					else
-						$result = get_workoffer_list($auth->mail, 0, 0);
+
+                                        $result = get_workoffer_list($auth->mail, $personal, $current);
 				?>
 
 				<table style="width: 350px">
@@ -141,13 +142,13 @@
 						<th>ID παροχής</th>
 						<th>Καθηγητής</th>
 						<th>Τίτλος παροχής</th>
-						<th>Αριθμός υποψηφίων</th>
+						<th>Αριθμός φοιτητών</th>
+						<th>Ώρες ανά φοιτητή</th>
 						<th>Απαιτήσεις γνώσεων</th>
 						<th>Παραδοτέα </th>
-						<th>Απαιτούμενες ώρες υλοποίησης</th>
 						<th>Λήξη προθεσμίας</th>
-						<th>Ακαδημαϊκό έτος</th>
-						<th>Χειμερινού εξαμήνου</th>
+						<th>Ημερομηνία έναρξης</th>
+						<th>Ημερομηνία τέλους</th>
 					</tr>
 				</thead>
 				<tbody>	
@@ -155,7 +156,7 @@
 					while($row = mysql_fetch_assoc($result)) {
 						extract($row);
 						echo "<tr>\n";
-						echo "<td>$id</td><td>$professor_name</td><td>$title</td><td>$candidates</td><td>$requirements</td><td>$deliverables</td><td>$hours</td><td>$deadline</td><td>$start_date</td>";
+						echo "<td>$id</td><td>$professor_name</td><td>$title</td><td>$candidates</td><td>$hours</td><td>$requirements</td><td>$deliverables</td><td>$deadline</td><td>$start_date</td><td>$end_date</td>";
 						echo "</tr>\n";
 					}
 				?>
