@@ -13,14 +13,16 @@
 		@import "../jquery-ui-1.8.11.custom/css/redmond/jquery-ui-1.8.11.custom.css";
 		@import "../media/css/TableTools.css";
 	</style>
+
 	<script type="text/javascript" language="javascript" src="../dataTables/js/jquery.dataTables.min.js"></script>
 	<script type="text/javascript" language="javascript" src="../media/js/ZeroClipboard.js"></script>
 	<script type="text/javascript" language="javascript" src="../media/js/TableTools.min.js"></script>
+
 	<script type="text/javascript" charset="utf-8">
 		
-		var oTable;
+	var oTable;
 		
-		$(document).ready(function(){ 
+	$(document).ready(function(){ 
 		/* Init the table */
 		oTable = $('#example').dataTable({
 			"bJQueryUI": true,
@@ -44,72 +46,20 @@
 		var oTableTools = new TableTools( oTable, {
 			"sSwfPath": "../media/swf/copy_cvs_xls_pdf.swf",
 			"aButtons": [ "copy","xls", "print" ]
-        } );
+		} );
 
 
 		$('#demo_jui').before( oTableTools.dom.container );
 
 
-		$('input[name=menu]').click(function()
-		{
-			window.location.href="/professor/prof_menu.php";
-		}); 
-
-		}); 
-
+	 });
 
 		function radio_click()
 		{
-			if($('input[name=filter1]:checked').val() == "one")
-			{
-				if($('input[name=filter2]:checked').val() == "current")
-				{
-					if($('input[name=filter3]:checked').val() == "live")
-					{
-						window.location.href="workoffers_overview.php?choice=111";
-					}
-					else
-					{
-						window.location.href="workoffers_overview.php?choice=112";
-					}
-				}
-				else
-				{
-					if($('input[name=filter3]:checked').val() == "live")
-					{
-						window.location.href="workoffers_overview.php?choice=121";
-					}
-					else
-					{
-						window.location.href="workoffers_overview.php?choice=122";
-					}
-				}
-			}
-			else
-			{
-				if($('input[name=filter2]:checked').val() == "current")
-				{
-					if($('input[name=filter3]:checked').val() == "live")
-					{
-						window.location.href="workoffers_overview.php?choice=211";
-					}
-					else
-					{
-						window.location.href="workoffers_overview.php?choice=212";
-					}
-				}
-				else
-				{
-					if($('input[name=filter3]:checked').val() == "live")
-					{
-						window.location.href="workoffers_overview.php?choice=221";
-					}
-					else
-					{
-						window.location.href="workoffers_overview.php?choice=222";
-					}
-				}
-			}	 
+			var personal = ($('input[name=filter1]:checked').val() == "one") ? 1 : 0;
+			var current = ($('input[name=filter3]:checked').val() == "live") ? 1 : 0;
+
+			window.location.href = "workoffers_overview.php?current="+current+"&personal="+personal;
 		}
 
 
@@ -160,7 +110,7 @@
 						$personal = $_GET['personal'];
 						$current = $_GET['current'];
 
-						$result = get_data($auth->mail, $personal, $current);
+						$result = get_workoffer_list($auth->mail, $personal, $current);
 					}
 					else
 						$result = get_workoffer_list($auth->mail, 0, 0);
@@ -172,16 +122,16 @@
 					<td><input type="radio" name="filter1" onClick="radio_click();" value="one" <?php if ($personal) {echo "checked=\"true\"";} ?> /></label></td>
 					<td style="width: 50px"></td>
 					<td><label>Όλων των καθηγητών</td>
-					<td><input type="radio" name="filter1" onClick="radio_click();" value="all" <?php if ($personal) {echo "checked=\"false\"";}?> /></label></td>
+					<td><input type="radio" name="filter1" onClick="radio_click();" value="all" <?php if (!$personal) {echo "checked=\"true\"";}?> /></label></td>
 				</tr>
 				<tr>
 					<td><label>Τρέχουσες παροχές</td>
 					<td><input type="radio" name="filter3" onClick="radio_click();" value="live"
-					<?php if($choice=="111"||$choice=="121"||$choice=="211"||$choice=="221"){echo "checked=\"true\"";}?> /></label></td>
+					<?php if($current){echo "checked=\"true\"";}?> /></label></td>
 					<td style="width: 50px"></td>
 					<td><label>Παλιές παροχές</td>
 					<td><input type="radio" name="filter3" onClick="radio_click();" value="dead"
-					<?php if($choice=="112"||$choice=="122"||$choice=="212"||$choice=="222"){echo "checked=\"true\"";}?>/></label></td>
+					<?php if(!$current){echo "checked=\"true\"";}?>/></label></td>
 				</tr>
 				</table>
 					
@@ -213,7 +163,7 @@
 				</table>
 				
 				<br />
-				<input type="button" name="menu" value="Αρχικό μενού" class="button"/>
+				<input type="button" name="menu" value="Αρχικό μενού" class="button" onclick="window.location.href='/index.php'" />
 				</div>
 			</form>	
 				

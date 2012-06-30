@@ -17,10 +17,10 @@
 		$query = "select * from work_offers where 1=1 ";
 
 		if ($personal)
-			$query += " and professor_email = '$email' ";
+			$query .= " and professor_email = '$email' ";
 
 		if ($current)
-			$query += " and now() between start_date and end_date ";
+			$query .= " and now() between start_date and end_date ";
 
 
 		$result_set = mysql_query($query, $con);
