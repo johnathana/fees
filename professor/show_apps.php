@@ -214,7 +214,7 @@
 			if(isset($_GET['id']))//exei epilexsei kapoia paroxi apo to personal workoffer list
 			{
 				$workid = $_GET['id'];
-				$query1 = "SELECT candidates, title, has_expired, is_available FROM work_offers WHERE id = '$workid'";
+				$query1 = "SELECT candidates, title is_available FROM work_offers WHERE id = '$workid'";
 				$res = mysql_query($query1,$con);
 				confirm_query($res);
 				$row1 = mysql_fetch_assoc($res);?>
@@ -231,7 +231,7 @@
 				$row = mysql_fetch_assoc($workapps);
 				if($row1['candidates'] == mysql_num_rows($workapps))
 					echo "Έχει συμπληρωθεί ο μέγιστος αριθμός φοιτητών"."<br />";
-				if (mysql_num_rows($workapps)==0 && $row1['is_available']==0)
+				if ($row1['is_available'] == 0)
 					echo "Η παροχή έχει απενεργοποιηθεί"."<br />";
 				
 				$query = "SELECT * FROM work_applications WHERE work_id = '$workid'";
@@ -248,7 +248,7 @@
 								<th>Ημερ/νια αίτησης</th>
 								<th>Του/Της έχει ανατεθεί</th>
 								<th>Όνομα φοιτητή</th>
-								<th>Email φοιτητή</th>								
+								<th>Email φοιτητή</th>
 							</tr>
 						</thead>
 						<tbody>	
@@ -270,7 +270,7 @@
 						<br />
 						<p><input class="button" type="button" name="back" value="Πίσω"  />
 						<input type="button" name="menu" value="Αρχικό μενού" class="button"/>
-						<?php if($row1['has_expired']==0){?><input class="button" type="submit" name="submit_btn" value="Ανάθεση παροχής στο φοιτητή"  /><?php	}?>
+						<input class="button" type="submit" name="submit_btn" value="Ανάθεση παροχής στο φοιτητή"  />
 						<input class="button" type="button" name="erase" value="Αναίρεση παροχής από φοιτητή"  />
 						<input class="button" type="button" name="btn" value="Πληροφορίες"  /></p>
 					</form>
@@ -284,7 +284,7 @@
 				{
 					$workoffer_id = $_POST['workoffer_id'];
 					$workapp_id = $_POST['id'];
-					$query1 = "SELECT candidates,is_available,title,has_expired FROM work_offers WHERE id='$workoffer_id'";
+					$query1 = "SELECT candidates,is_available,title FROM work_offers WHERE id='$workoffer_id'";
 					$result_set1 = mysql_query($query1,$con);
 					confirm_query($result_set1);
 					$row1 = mysql_fetch_assoc($result_set1);
@@ -304,7 +304,7 @@
 						echo "Δεν μπορεί να γίνει η παραπάνω ανάθεση"."<br />";
 						echo "Ο μέγιστος επιτρεπόμενος αριθμός φοιτητών είναι $max_candidates και τους έχετε ήδη επιλέξει"."<br />";
 					}
-					elseif (mysql_num_rows($workapps)==0 && $row1['is_available']==0)
+					elseif ($row1['is_available'] == 0)
 					{
 						echo "Η παροχή έχει απενεργοποιηθεί"."<br />";
 					}
@@ -370,11 +370,13 @@
 							</tbody>
 							</table>
 							<br />
-							<p><input class="button" type="button" name="back" value="Πίσω"  />
-							<input type="button" name="menu" value="Αρχικό μενού" class="button"/>
-							<?php if($row1['has_expired']==0){?><input class="button" type="submit" name="submit_btn" value="Ανάθεση παροχής στο φοιτητή"  /><?php	}?>
-							<input class="button" type="button" name="erase" value="Αναίρεση παροχής από φοιτητή"  />
-							<input class="button" type="button" name="btn" value="Πληροφορίες"  /></p>
+							<p>
+								<input class="button" type="button" name="back" value="Πίσω"  />
+								<input type="button" name="menu" value="Αρχικό μενού" class="button"/>
+								<input class="button" type="submit" name="submit_btn" value="Ανάθεση παροχής στο φοιτητή"  />
+								<input class="button" type="button" name="erase" value="Αναίρεση παροχής από φοιτητή"  />
+								<input class="button" type="button" name="btn" value="Πληροφορίες"  />
+							</p>
 						</form>
 					</div><?php
 				}

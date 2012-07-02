@@ -82,7 +82,7 @@
 			}
 			else //έχει επιλεγεί κάποια παροχή
 			{
-				window.location.href="edit_test.php?id="+workid+"";
+				window.location.href="edit_workoffer.php?id="+workid+"";
 			}
 		}
 		function check_redirect2()
@@ -232,16 +232,16 @@
 				if (isset($_GET['check']) && $_GET['check'] == "notlive"){  ?>
 				<table style="width: 150px">
 				<tr>
-					<td><label>Ενεργές παροχές</td>
+					<td><label>Τρέχουσες παροχές</td>
 					<td><input type="radio" name="myradio" onClick="radio_click();" value="live" /></label></td>
 				</tr>
 				<tr>
-					<td><label>Ανενεργές παροχές</td>
+					<td><label>Παλιές παροχές</td>
 					<td><input type="radio" name="myradio" onClick="radio_click();" value="dead" checked="true" /></label></td>
 				</tr>
 				</table>
 				<?php
-						$query = "SELECT * FROM work_offers WHERE professor_email = '".$auth->mail."' AND has_expired = true";//fere tis anenerges paroxes enos kathigiti
+						$query = "SELECT * FROM work_offers WHERE professor_email = '".$auth->mail."' AND end_date < now();";//fere tis anenerges paroxes enos kathigiti
 						$result_set = mysql_query($query,$con);
 						confirm_query($result_set);
 				}
@@ -249,16 +249,16 @@
 				?>
 				<table style="width: 150px">
 				<tr>
-					<td><label>Ενεργές παροχές</td>
+					<td><label>Τρέχουσες παροχές</td>
 					<td><input type="radio" name="myradio" onClick="radio_click();" value="live" checked="true" /></label></td>
 				</tr>
 				<tr>
-					<td><label>Ανενεργές παροχές</td>
+					<td><label>Παλιές παροχές</td>
 					<td><input type="radio" name="myradio" onClick="radio_click();" value="dead"  /></label></td>
 				</tr>
 				</table>
 				<?php
-						$query = "SELECT * FROM work_offers WHERE professor_email = '".$auth->mail."' AND has_expired = false";//fere tis anenerges paroxes enos kathigiti
+						$query = "SELECT * FROM work_offers WHERE professor_email = '".$auth->mail."' AND end_date > now();";//fere tis anenerges paroxes enos kathigiti
 						$result_set = mysql_query($query,$con);
 						confirm_query($result_set);
 				}
@@ -271,13 +271,13 @@
 						<th>ID παροχής</th>
 						<th>Καθηγητής</th>
 						<th>Τίτλος παροχής</th>
-						<th>Αριθμός υποψηφίων</th>
+						<th>Αριθμός φοιτητών</th>
 						<th>Απαιτήσεις γνώσεων</th>
-						<th>Παραδοτέα </th>
+						<th>Παραδοτέα</th>
 						<th>Απαιτούμενες ώρες υλοποίησης</th>
-						<th>Λήξη προθεσμίας</th>
-						<th>Ακαδημαϊκό έτος</th>
-						<th>Χειμερινού εξαμήνου</th>
+						<th>Λήξη προθεσμίας υποβολής</th>
+						<th>Ημερομηνία έναρξης</th>
+						<th>Ημερομηνία λήξης</th>
 					</tr>
 				</thead>
 				<tbody>	
@@ -286,10 +286,8 @@
 					{
 						extract($row);
 						echo "<tr>";
-						$ayear_row = get_ayear_from_academic_year_id($academic_year_id);
-						echo "<td>$id</td><td>$professor_name</td><td>$title</td><td>$candidates</td><td>$requirements</td><td>$deliverables</td><td>$hours</td><td>$deadline</td><td>$ayear_row[ayear]</td>";
-						echo "<td><input type='checkbox' disabled='true' " . (($winter_semester == 1) ? "checked='true'" : "") . ">";
-						echo "</td></tr>";
+						echo "<td>$id</td><td>$professor_name</td><td>$title</td><td>$candidates</td><td>$requirements</td><td>$deliverables</td><td>$hours</td><td>$deadline</td><td>$start_date</td><td>$end_date</td>";
+						echo "</tr>";
 					}
 				?>	
 				</tbody>
@@ -297,7 +295,7 @@
 				
 				<br />
 				<p>
-					<input type="button" id="prof" name="menu" value="Αρχικό μενού" class="button"/>
+					<input type="button" id="prof" name="menu" value="Αρχικό μενού" class="button" onClick="window.location.href='/index.php'" />
 					<input class="button" type="button" id="edit_btn" onClick="check_redirect1();" value="Επεξεργασία"  />
 					<input class="button" type="button" id="apps_btn" onClick="check_redirect2();" value="Αιτήσεις για αυτήν την παροχή"  />
 				</p>
