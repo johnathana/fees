@@ -112,7 +112,7 @@
 		if (isset($_POST['id']))//to id ths workoffer
 		{
 			$work_id = $_POST['id'];
-			$query = "UPDATE work_offers SET published = '1' WHERE id='$work_id'";
+			$query = "UPDATE work_offers SET published = !published WHERE id='$work_id'";
 			$result_set = mysql_query($query,$con);
 			confirm_query($result_set);
 		}
@@ -126,7 +126,7 @@
 			$current = 1;
 		}
 
-		$result = get_workoffer_list($auth->mail, $personal, $current);
+		$result = get_admin_workoffer_list($auth->mail, $pending, $current);
 
 	?>
 
@@ -192,7 +192,7 @@
 				
 				<br />
 				<p>
-				<input class="button" type="submit" name="submit_btn" value="Έγκριση παροχής"  />
+				<input class="button" type="submit" name="submit_btn" value="<?php if (isset($published) && !$published) echo "Έγκριση παροχής"; else echo "Ανάκληση παροχής"; ?>"  />
 				</p>
 				</div>
 			</form>

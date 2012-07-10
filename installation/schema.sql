@@ -52,7 +52,7 @@ create table if not exists work_offers (
     deadline date,
     faculty_id int unsigned,
     is_available boolean,
-    published boolean,
+    published boolean default false,
     foreign key (category_id) references workoffer_categories(id),
     foreign key (faculty_id) references faculty(id)
 ) character set 'utf8' collate 'utf8_general_ci';
