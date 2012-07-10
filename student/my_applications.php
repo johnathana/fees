@@ -4,7 +4,7 @@
 	<?php 
 		require_once($_SERVER['DOCUMENT_ROOT'].'/includes/head.php');
 		require_once($_SERVER['DOCUMENT_ROOT'].'/includes/auth.php');
-		require_once($_SERVER['DOCUMENT_ROOT'].'/includes/mail.php');			
+		require_once($_SERVER['DOCUMENT_ROOT'].'/includes/mail.php');
 		require_once($_SERVER['DOCUMENT_ROOT'].'/includes/functions.php'); 
 	 ?>
 	<style type="text/css" title="currentStyle">
@@ -26,23 +26,19 @@
 		//"sScrollXInner": "850px",
 		"bScrollCollapse": true,
 		"aoColumns": [
-					/* WorkOfferId */{"bVisible": false },
-					/* Professor name */null,
-					/* Title */null,
-					/* Candidates */null,
-					/* Requirements*/null,
-					/* Deliverables */null,
-					/* Hours */null,
-					/* Deadline */null,
-					/* Acad_year */null,
-					/* Winter */null,
-        ]
+			/* WorkOfferId */{"bVisible": false },
+			/* Professor name */null,
+			/* Title */null,
+			/* Candidates */null,
+			/* Requirements*/null,
+			/* Deliverables */null,
+			/* Hours */null,
+			/* Deadline */null,
+			/* Acad_year */null,
+			/* Winter */null,
+			]
 		});
 		
-		$('input[name=menu]').click(function()
-		{
-			window.location.href="/student/stud_menu.php";
-		});
 		
 		}); 
 		
@@ -112,41 +108,40 @@
 						<th>ID παροχής</th>
 						<th>Καθηγητής</th>
 						<th>Τίτλος παροχής</th>
-						<th>Αριθμός υποψηφίων</th>
+						<th>Αριθμός φοιτητών</th>
+						<th>Ώρες ανά φοιτητή</th>
 						<th>Απαιτήσεις γνώσεων</th>
-						<th>Παραδοτέα </th>
-						<th>Απαιτούμενες ώρες υλοποίησης</th>
-						<th>Λήξη προθεσμίας</th>
-						<th>Ακαδημαϊκό έτος</th>
-						<th>Χειμερινού εξαμήνου</th>
+						<th>Παραδοτέα</th>
+						<th>Λήξη προθεσμίας υποβολής</th>
+						<th>Ημερομηνία έναρξης</th>
+						<th>Ημερομηνία λήξης</th>
 					</tr>
 				</thead>
-				<tbody>	
-				<?php	while($row = mysql_fetch_assoc($result_set))
+				<tbody>
+				<?php	while ($row = mysql_fetch_assoc($result_set))
+					{
+						$workoffer_id = $row['work_id'];
+						$acceptance = $row['accepted'];
+						$query1 = "SELECT * FROM work_offers WHERE id='$workoffer_id'";
+						$result_set1 = mysql_query($query1, $con);
+						confirm_query($result_set1);
+
+						while ($row1 = mysql_fetch_assoc($result_set1))
 						{
-							$workoffer_id = $row['work_id'];
-							$acceptance = $row['accepted'];
-							$query1 = "SELECT * FROM work_offers WHERE id='$workoffer_id'";
-							$result_set1 = mysql_query($query1,$con);
-							confirm_query($result_set1);
-							while($row1 = mysql_fetch_assoc($result_set1))
-							{
-								extract($row1);
-								echo "<tr".(($acceptance==1) ? " class = 'high'>" : ">");
-								
-								/*Βρίσκουμε τις τιμές που θέλουμε μέσω των ξένων κλειδιών*/
-								//$row2 = get_surname_from_professor_id($professor_id);
-								$ayear_row = get_ayear_from_academic_year_id($academic_year_id);
-								echo "<td>$id</td><td>$professor_name</td><td>$title</td><td>$candidates</td><td>$requirements</td><td>$deliverables</td><td>$hours</td><td>$deadline</td><td>$ayear_row[ayear]</td>";
-								echo "<td><input type='checkbox' disabled='true' " . (($winter_semester == 1) ? "checked='true'" : "") . ">";
-								echo "</td></tr>\n";
-							}
-						}	
-				?>	
+							extract($row1);
+							echo "<tr".(($acceptance==1) ? " class = 'high'>" : ">");
+							
+							/*Βρίσκουμε τις τιμές που θέλουμε μέσω των ξένων κλειδιών*/
+							//$row2 = get_surname_from_professor_id($professor_id);
+							echo "<td>$id</td><td>$professor_name</td><td>$title</td><td>$candidates</td><td>$hours</td><td>$requirements</td><td>$deliverables</td><td>$deadline</td><td>$start_date</td><td>$end_date</td>";
+							echo "</tr>\n";
+						}
+					}
+				?>
 				</tbody>
 				</table>
 				<br />
-				<input type="button" name="menu" value="Αρχικό μενού" class="button"/>
+				<input type="button" name="menu" value="Αρχικό μενού" class="button" onClick="window.location.href='/index.php'"/>
 			</form>		
 		</div>
 			<div class="spacer"></div>

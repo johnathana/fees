@@ -178,7 +178,7 @@ $registration->processRequest();
 ?>
 
 	<div style="margin: 0px 0px 5px 10px">
-		<input type="button" name="menu" value="Ακύρωση" class="button" onClick="window.location.href='/index.php'"/> 	
+		<input type="button" name="menu" value="Ακύρωση" class="button" onClick="window.location.href='/index.php'"/>
 	</div>
 	
 

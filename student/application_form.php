@@ -46,11 +46,7 @@
 			$(event.target.parentNode).addClass('row_selected');
 		});
 		
-		$('input[name=menu]').click(function()
-		{
-			window.location.href="/student/stud_menu.php";
-		}); 
-		
+
 		$('input[name=submit_btn]').click(function()
 		{
 			var workid = (fnGetSelected(oTable));
@@ -62,7 +58,7 @@
 			else //έχει επιλεγεί κάποια παροχή
 			{
 				alert("Ανακατεύθυνση στις παροχές που έχετε κάνει αίτηση");
-				window.location.href="my_applications.php?id="+workid;
+				window.location.href="my_applications.php?id=" + workid;
 			}
 		});
 		
@@ -111,8 +107,9 @@
 				<div id="demo" ></div>
 				
 				<?php
-					$query = "SELECT * FROM work_offers WHERE published=true AND is_available=true AND has_expired=false";//fere tis diathesimes paroxes
-					$result_set = mysql_query($query,$con);
+					//$query = "select * from work_offers where published = true and is_available = true and now() < deadline";
+					$query = "select * from work_offers where published = true and is_available = true";
+					$result_set = mysql_query($query, $con);
 					confirm_query($result_set);
 				?>
 				
@@ -122,37 +119,36 @@
 						<th>ID παροχής</th>
 						<th>Καθηγητής</th>
 						<th>Τίτλος παροχής</th>
-						<th>Αριθμός υποψηφίων</th>
+						<th>Αριθμός φοιτητών</th>
+						<th>Ώρες ανά φοιτητή</th>
 						<th>Απαιτήσεις γνώσεων</th>
-						<th>Παραδοτέα </th>
-						<th>Απαιτούμενες ώρες υλοποίησης</th>
-						<th>Λήξη προθεσμίας</th>
-						<th>Ακαδημαϊκό έτος</th>
-						<th>Χειμερινού εξαμήνου</th>
+						<th>Παραδοτέα</th>
+						<th>Λήξη προθεσμίας υποβολής</th>
+						<th>Ημερομηνία έναρξης</th>
+						<th>Ημερομηνία λήξης</th>
 					</tr>
 				</thead>
-				<tbody>	
-				<?php	while($row = mysql_fetch_assoc($result_set))
-						{
-							extract($row);
-							echo "<tr>";
-							$ayear_row = get_ayear_from_academic_year_id($academic_year_id);
-							echo "<td>$id</td><td>$professor_name</td><td>$title</td><td>$candidates</td><td>$requirements</td><td>$deliverables</td><td>$hours</td><td>$deadline</td><td>$ayear_row[ayear]</td>";
-							echo "<td><input type='checkbox' disabled='true' " . (($winter_semester == 1) ? "checked='true'" : "checked='false'") . ">";
-							echo "</td></tr>";
-						}
-					
-				?>	
+				<tbody>
+				<?php	while ($row = mysql_fetch_assoc($result_set))
+					{
+						extract($row);
+						echo "<tr>";
+						echo "<td>$id</td><td>$professor_name</td><td>$title</td><td>$candidates</td><td>$hours</td><td>$requirements</td><td>$deliverables</td><td>$deadline</td><td>$start_date</td><td>$end_date</td>";
+						echo "</tr>";
+					}
+				?>
 				</tbody>
 				</table>
 				<br />
-				<p><input class="button" type="button" name="submit_btn" value="Καταχώρηση"  />
-				<input type="button" name="menu" value="Αρχικό μενού" class="button"/>	</p>
-			</form>	
+				<p>
+					<input class="button" type="button" name="submit_btn" value="Αίτηση"  />
+					<input type="button" name="menu" value="Αρχικό μενού" class="button" onClick="window.location.href='/index.php'" />
+				</p>
+			</form>
 			
 		</div>
 			<div class="spacer"></div>
-		
+
 
 	</aside> 
 	</div><!--/content--> 
