@@ -22,6 +22,10 @@
 		{
 			window.location.href="/professor/personal_workoffer_list.php";
 		});
+		$('input[name=assignhours]').click(function()
+		{
+			window.location.href="/professor/assign_hours.php";
+		});
     }); 
 	</script>
 </head> 
@@ -40,6 +44,7 @@
 				<tr><td><input style="width:130px; height:35px;" class="button" type="button" name="create" value="Δημιουργία παροχής" /></td></tr>
 				<tr><td><input style="width:130px; height:35px;" class="button" type="button" name="overview" value="Επισκόπηση παροχών" /></td></tr>
 				<tr><td><input style="width:130px; height:35px;" class="button" type="button" name="management" value="Διαχείριση παροχών" /></td></tr>
+				<tr><td><input style="width:130px; height:35px;" class="button" type="button" name="assignhours" value="Ανάθεση Ωρών" /></td></tr>
 			</table>
 		</div>
 		
