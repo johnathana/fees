@@ -5,7 +5,6 @@
 		require_once($_SERVER['DOCUMENT_ROOT'].'/includes/head.php'); 
 		require_once($_SERVER['DOCUMENT_ROOT'].'/includes/auth.php');
 		require_once($_SERVER['DOCUMENT_ROOT'].'/includes/functions.php');
-		require_once($_SERVER['DOCUMENT_ROOT'].'/secretariat/form.libs.php');		
 	 ?>
 	<style type="text/css" title="currentStyle">
 		@import "../dataTables/css/demo_page.css";

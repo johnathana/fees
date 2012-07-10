@@ -33,7 +33,6 @@
 		<div id="container">
 			<h3 style="text-align:center; line-height:58px; font-size:18px">Κεντρικό Μενού Γραμματείας </h3>
 			<table align="center">
-				<tr><td><input style="width:130px; height:35px;" class="button" type="button" name="assign_hours" value="Ανάθεση Ωρών" /></td></tr>
 				<tr><td><input style="width:130px; height:35px;" class="button" type="button" name="view_hours" value="Αναγνωρισμένες Ώρες" /></td></tr>
 			</table>
 		</div>
