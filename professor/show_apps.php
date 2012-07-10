@@ -214,7 +214,7 @@
 			if(isset($_GET['id']))//exei epilexsei kapoia paroxi apo to personal workoffer list
 			{
 				$workid = $_GET['id'];
-				$query1 = "SELECT candidates, title is_available FROM work_offers WHERE id = '$workid'";
+				$query1 = "SELECT candidates, title, is_available FROM work_offers WHERE id = '$workid'";
 				$res = mysql_query($query1,$con);
 				confirm_query($res);
 				$row1 = mysql_fetch_assoc($res);?>
@@ -226,11 +226,12 @@
 				</div>
 				<?php
 				$query = "SELECT * FROM work_applications WHERE work_id = '$workid' AND accepted = '1'";
-				$workapps = mysql_query($query,$con);
+				$workapps = mysql_query($query, $con);
 				confirm_query($workapps);
 				$row = mysql_fetch_assoc($workapps);
 				if($row1['candidates'] == mysql_num_rows($workapps))
 					echo "Έχει συμπληρωθεί ο μέγιστος αριθμός φοιτητών"."<br />";
+
 				if ($row1['is_available'] == 0)
 					echo "Η παροχή έχει απενεργοποιηθεί"."<br />";
 				
@@ -251,20 +252,20 @@
 								<th>Email φοιτητή</th>
 							</tr>
 						</thead>
-						<tbody>	
-					<?php
-					while($row = mysql_fetch_assoc($workapps))
-					{
-						extract($row);
-						if($accepted == 1)
-							$accepted = "ΝΑΙ";
-						else
-							$accepted = "ΟΧΙ";
-						echo "<tr>";	
-						echo "<td>$id</td><td>$applied</td><td>$accepted</td><td>$student_name</td><td>$student_email</td>";
-						echo "</tr>";
-					}
-					?>
+						<tbody>
+
+						<?php
+							while($row = mysql_fetch_assoc($workapps))
+							{
+								extract($row);
+								$accepted = ($accepted == 1) ? "Ναι" : "Όχι";
+
+								echo "<tr>";
+								echo "<td>$id</td><td>$applied</td><td>$accepted</td><td>$student_name</td><td>$student_email</td>";
+								echo "</tr>";
+							}
+						?>
+
 						</tbody>
 						</table>
 						<br />
