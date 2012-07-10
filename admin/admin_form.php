@@ -74,8 +74,8 @@
 
 	function radio_click()
 	{
-		var pending = ($('input[name=filter1]:checked').val() == "one") ? 1 : 0;
-		var current = ($('input[name=filter3]:checked').val() == "live") ? 1 : 0;
+		var pending = ($('input[name=filter1]:checked').val() == "pending") ? 1 : 0;
+		var current = ($('input[name=filter2]:checked').val() == "current") ? 1 : 0;
 
 		window.location.href = "admin_form.php?current="+current+"&pending="+pending;
 	}
@@ -99,18 +99,16 @@
 		}
 		return null;
 	}
+
 	</script>
 </head> 
 
 <body id="overview"> 
 
-	<?php require_once($_SERVER['DOCUMENT_ROOT'].'/includes/header.php'); ?>
+	<?php
+		require_once($_SERVER['DOCUMENT_ROOT'].'/includes/header.php');
 
-	<div id="globalfooter"> 
 
-	<div class="content promos grid2col"> 
-	<aside class="column first" id="optimized">
-	<?php 
 		if (isset($_POST['id']))//to id ths workoffer
 		{
 			$work_id = $_POST['id'];
@@ -118,7 +116,26 @@
 			$result_set = mysql_query($query,$con);
 			confirm_query($result_set);
 		}
+
+
+		if (isset($_GET['pending']) && isset($_GET['current'])) {  
+			$pending = $_GET['pending'];
+			$current = $_GET['current'];
+		} else {
+			$pending = 1;
+			$current = 1;
+		}
+
+		$result = get_workoffer_list($auth->mail, $personal, $current);
+
 	?>
+
+
+	<div id="globalfooter"> 
+
+	<div class="content promos grid2col"> 
+	<aside class="column first" id="optimized">
+
 		<div id="container">
 			<div class="full_width big">
 				<h2>Φόρμα Έγκρισης Παροχών</h2> 
@@ -129,55 +146,46 @@
 				<div id="demo" ></div>
 				<div class="demo_jui" id="demo_jui">
 				
-				<?php   
-					if (isset($_GET['pending']) && isset($_GET['current'])) {  
-						$pending = $_GET['pending'];
-						$current = $_GET['current'];
-					} else {
-						$pending = 1;
-                                                $current = 1;
-					}
-
-                                        $result = get_workoffer_list($auth->mail, $personal, $current);
-				?>
-				<table style="width: 300px">
+				<table style="width: 350px">
 				<tr>
-					<td><label>Εγκεκριμένες παροχές</td>
-					<td><input type="radio" name="filter1" onClick="radio_click();" value="one" <?php if (!$pending) {echo "checked=\"true\"";}?> /></label></td>
 					<td><label>Προς έγκριση παροχές</td>
-					<td><input type="radio" name="filter1" onClick="radio_click();" value="all" <?php if ($pending)  {echo "checked=\"true\"";}?> /></label></td>
+					<td><input type="radio" name="filter1" onClick="radio_click();" value="pending" <?php if ($pending)  {echo "checked=\"true\"";}?> /></label></td>
+					<td style="width: 50px"></td>
+					<td><label>Εγκεκριμένες παροχές</td>
+					<td><input type="radio" name="filter1" onClick="radio_click();" value="notpending" <?php if (!$pending) {echo "checked=\"true\"";}?> /></label></td>
 				</tr>
 				<tr>
 					<td><label>Τρέχοuσες παροχές</td>
 					<td><input type="radio" name="filter2" onClick="radio_click();" value="current" <?php if ($current) {echo "checked=\"true\"";}?> /></label></td>
+					<td style="width: 50px"></td>
 					<td><label>Παλιές παροχές</td>
 					<td><input type="radio" name="filter2" onClick="radio_click();" value="old" <?php if (!$current) {echo "checked=\"true\"";}?>/></label></td>
 				</tr>
 				</table>
-				<br />	
+
 				<table cellpadding="0" cellspacing="0" border="0" class="display" id="example" >
 				<thead>
 					<tr>
 						<th>ID παροχής</th>
 						<th>Καθηγητής</th>
 						<th>Τίτλος παροχής</th>
-						<th>Αριθμός υποψηφίων</th>
+						<th>Αριθμός φοιτητών</th>
+						<th>Ώρες ανά φοιτητή</th>
 						<th>Απαιτήσεις γνώσεων</th>
-						<th>Παραδοτέα </th>
-						<th>Απαιτούμενες ώρες υλοποίησης</th>
-						<th>Λήξη προθεσμίας</th>
-						<th>Ακαδημαϊκό έτος</th>
-						<th>Χειμερινού εξαμήνου</th>
+						<th>Παραδοτέα</th>
+						<th>Λήξη προθεσμίας υποβολής</th>
+						<th>Ημερομηνία έναρξης</th>
+						<th>Ημερομηνία λήξης</th>
 					</tr>
 				</thead>
 				<tbody>	
 				<?php	while($row = mysql_fetch_assoc($result))
-						{
-							extract($row);
-							echo "<tr>\n";
-							echo "<td>$id</td><td>$professor_name</td><td>$title</td><td>$candidates</td><td>$requirements</td><td>$deliverables</td><td>$hours</td><td>$deadline</td><td>$start_date</td><td>$end_date</td>";
-							echo "</tr>\n";
-						}
+					{
+						extract($row);
+						echo "<tr>\n";
+						echo "<td>$id</td><td>$professor_name</td><td>$title</td><td>$candidates</td><td>$hours</td><td>$requirements</td><td>$deliverables</td><td>$deadline</td><td>$start_date</td><td>$end_date</td>";
+						echo "</tr>\n";
+					}
 				?>	
 				</tbody>
 				</table>
