@@ -92,7 +92,7 @@
 							$to = $row5['professor_email'];
 							$subject = "Workoffer Application";
 							$message = "Ο φοιτητής ".$auth->attr['cn'] ." έχει κάνει αίτηση για την παροχή ".$row5['title'].".";
-							workoffer_mail($to, $subject, $message);
+							send_mail($to, $subject, $message);
 							
 						}
 					}
