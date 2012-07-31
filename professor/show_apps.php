@@ -325,7 +325,7 @@
 							$to = $work_app_row['student_email'];
 							$subject = "Application accepted";
 							$message = "Η αίτησή σας για την παροχή ".$row1['title']." έγινε αποδεκτή.";
-							workoffer_mail($to, $subject, $message);
+							send_mail($to, $subject, $message);
 							$query3 = "SELECT * FROM work_applications WHERE work_id = '$workoffer_id' AND accepted = '1'";
 							$workapps = mysql_query($query3,$con);
 							confirm_query($workapps);
