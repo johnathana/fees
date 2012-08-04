@@ -17,16 +17,16 @@ class auth {
 
 	function auth() {
 
-		$this->user = 'arkas';
-		$this->attr = array('mail' => 'mop09261@di.uoa.gr',
+		$this->user = 'serg';
+		$this->attr = array('mail' => 'serg@di.uoa.gr',
                'title'  => 'JOHN',
-               'cn'   => 'ÃéÜííçò ÁèáíáóÝëçò',
+               'cn'   => 'Î˜ÎµÎ¿Î´Ï‰ÏÎ¯Î´Î·Ï‚',
 			   'edupersonaffiliation' => 'professor',
 			   'edupersonorgunitdn' => 'ou=inftel,ou=schools,dc=uoa,dc=gr');
 
 
-		$this->role = self::Student;
-		$this->mail = "mop09261@di.uoa.gr";
+		$this->role = self::Professor;
+		$this->mail = 'serg@di.uoa.gr';
 
 	} 
 }

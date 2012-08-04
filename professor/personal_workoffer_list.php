@@ -241,7 +241,7 @@
 				</tr>
 				</table>
 				<?php
-						$query = "SELECT * FROM work_offers WHERE professor_email = '".$auth->mail."' AND end_date < now();";//fere tis anenerges paroxes enos kathigiti
+						$query = "SELECT * FROM work_offers WHERE professor_email = '".$auth->mail."' AND end_date < now();";//fere tis palies paroxes enos kathigiti
 						$result_set = mysql_query($query,$con);
 						confirm_query($result_set);
 				}
@@ -258,7 +258,7 @@
 				</tr>
 				</table>
 				<?php
-						$query = "SELECT * FROM work_offers WHERE professor_email = '".$auth->mail."' AND end_date > now();";//fere tis anenerges paroxes enos kathigiti
+						$query = "SELECT * FROM work_offers WHERE professor_email = '".$auth->mail."' AND end_date > now();";//fere tis trexouses paroxes enos kathigiti
 						$result_set = mysql_query($query,$con);
 						confirm_query($result_set);
 				}

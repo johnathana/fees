@@ -180,7 +180,7 @@
 				<tbody>
 				<?php	while($row = mysql_fetch_assoc($result_set))
 					{
-						$query1 = "select * from work_offers where id = '$row[work_id]' and professor_email = '" + $auth->mail + "'";
+						$query1 = "select * from work_offers where id = '$row[work_id]' and professor_email = '" . $auth->mail . "'";
 						$result_set1 = mysql_query($query1, $con);
 						confirm_query($result_set1);
 
